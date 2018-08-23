@@ -239,5 +239,5 @@ color:
 	default:
 		cout << "Invalid Input\n";
 		goto start;
-	}
+	}	
 }
