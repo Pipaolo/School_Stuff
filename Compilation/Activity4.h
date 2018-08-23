@@ -529,11 +529,17 @@ start:
 }
 
 void Div_Two(int num){
-	num %= 2;
-	if (num == 0){
+	
+	num %= 10;
+	
+	if (num == 2 || num == 4 || num == 6 || num == 8 || num == 0) {
+		
 		cout << "The value that you have entered is divisible by 2\n";
+		
 	} else {
+		
 		cout << "The value that you have entered is not divisible by 2\n";
+		
 	}	
 }
 
