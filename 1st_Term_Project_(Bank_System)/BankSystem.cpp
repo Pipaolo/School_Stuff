@@ -194,6 +194,7 @@ class userAccount : public User
             bank.open(accHolder, std::ios::in);
             bank >> money;
             cout << "Currently you have: P" << money << "\n";
+            bank.close();
             system("pause");
             bankMenu();
         }
