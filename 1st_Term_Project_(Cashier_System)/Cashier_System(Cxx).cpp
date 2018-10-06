@@ -147,7 +147,16 @@ class User
 		cout << "That would be a total of: " << totalPrice << endl;
 		cout << "Enter amount of payment: ";
 		cin >> cash;
-		cout << "Thank you!";
+		if (cash < totalPrice)
+		{
+			cout << "Insufficient Funds" << endl;
+			goto start;
+		}
+		else
+		{
+			cout << "Your change is " << cash - totalPrice << endl;
+			cout << "Thank you!";
+		}
 		itemUpdate();
 		/*
 		After updating the stocks, I clear the vector to 
