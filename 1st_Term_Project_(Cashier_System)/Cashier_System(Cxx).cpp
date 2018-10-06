@@ -140,7 +140,7 @@ class User
 		cout << "-------------------------------------------" << endl;
 		for (unsigned int i = 0; i < itemCart.size(); i++)	
 		{
-			cout << itemCart[i] << "     " << itemCartPrice[i] << "     " << itemCartQuantity[i] << endl;
+			cout << itemCart[i] << "     " << itemCartQuantity[i] << "     " << itemCartPrice[i] << endl;
 			totalPrice += itemCartPrice[i];
 		}
 		
