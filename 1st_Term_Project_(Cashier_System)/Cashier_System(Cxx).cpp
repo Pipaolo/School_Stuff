@@ -38,7 +38,7 @@ class User
 		cin >> itemName;
 		cout << "Price: ";
 		cin >> price;
-		cout << "Price: ";
+		cout << "Quantity: ";
 		cin >> quantity;
 		std::fstream items;
 		items.open("items.txt", std::ios::out | std::ios::app);
@@ -199,12 +199,9 @@ class User
 				cout << itemList[index] << endl;
 				cout << "How many? " << endl;
 				cin >> quantityInput;
-				if(quantityInput > 1)
+				for (int i = 0; i < quantityInput; i++)
 				{
-					for (int i = 0; i < quantityInput; i++)
-					{
-						totalPrice += priceList[index];
-					}
+					totalPrice += priceList[index];
 				}
 				/*
 				This parts adds the item to the cart using vectors
