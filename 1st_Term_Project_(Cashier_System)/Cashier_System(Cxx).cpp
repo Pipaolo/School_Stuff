@@ -2,7 +2,6 @@
 #include <string>
 #include <fstream>
 #include <vector>
-#include <windows.h>
 using std::string;
 using std::cin;
 using std::cout;
@@ -88,7 +87,6 @@ class User
 	{
 		char input;
 		start:
-		system("cls");
 		cout << "--------------------------------------------" << endl;
 		cout << "                 ADMIN MENU" << endl;
 		cout << "--------------------------------------------" << endl;
@@ -103,7 +101,6 @@ class User
 				break;
 			case '2':
 				cout << "Logging Out..." << endl;
-				Sleep(2000);
 				break;
 		}
 	}
@@ -159,13 +156,11 @@ class User
 		itemCart.clear();
 		itemCartQuantity.clear();
 		itemCartPrice.clear();
-		system("pause");
 
 	}
 
 	void cart()
 	{
-		system("cls");
 		cout << "----------------------------------------------" << endl;
 		cout << "                  CART" << endl;
 		cout << "----------------------------------------------" << endl;
@@ -178,12 +173,10 @@ class User
 			cout << itemCart[i] << "   " << itemCartQuantity[i] << "   " << itemCartPrice[i] << endl;
 		}
 		
-		system("pause");
 	}
 
 	void itemBuy()
 	{
-		system("cls");
 		int input, quantityInput, totalPrice = 0;
 		std::ifstream items;
 		items.open("items.txt");
@@ -221,14 +214,12 @@ class User
 				itemCartQuantity.push_back(quantityInput);
 				itemCartPrice.push_back(totalPrice);	
 			}
-		}
-		system("pause");		
+		};		
 	}		
 };
 
 int main() {
 	start:
-	system("cls");
 	char input;
 	User user;
 	if (user.itemList.empty())
