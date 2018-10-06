@@ -19,6 +19,7 @@ loss.
 std::vector<string> itemCart;
 std::vector<int> itemCartQuantity;
 std::vector<int> itemCartPrice;	
+bool dataFound = true;
 
 class User
 {
@@ -39,7 +40,7 @@ class User
 		cin >> itemName;
 		cout << "Price: ";
 		cin >> price;
-		cout << "Price: ";
+		cout << "Quantity: ";
 		cin >> quantity;
 		std::fstream items;
 		items.open("items.txt", std::ios::out | std::ios::app);
@@ -117,7 +118,11 @@ class User
 		if (!menu.is_open())
 		
 		{
+			system("cls");
+			std::cerr << "CANNOT ACCESS ITEM DATABASE!" << endl;
 			menu.open("items.txt", std::ios::out);
+			system("pause");
+			dataFound = false;
 		}
 		
 		while (!menu.eof())
@@ -235,46 +240,52 @@ int main() {
 	{
 		user.refreshMenu();
 	}
-	
-	cout << "<--Welcome to Ctrl-Alt-Elite's Store!-->" << endl;
-	cout << "----------------------------------------" << endl;
-	cout << "                MAIN MENU" << endl;
-	cout << "----------------------------------------" << endl;
-	cout << "Total items in cart: " << itemCart.size() << endl;
-	cout << "1. Show Cart" << endl;
-	cout << "2. Buy Items" << endl;
-	if (itemCart.size() != 0)
+	if(!dataFound == false)
 	{
-		cout << "3. Continue to payment" << endl;
-	}
-	cout << "E. Exit" << endl;
-	cout << "Enter desired choice: " << endl;
-	cin >> input;
-	switch (input)
-	{
-		case '1':
-			user.cart();
-			goto start;
-			break;
-		case '2':
-			user.itemBuy();
-			goto start;
-			break;
-		case '3':
-			user.payment();
-			goto start;
-			break;
-		case 'E':
-			return 0;
-			break;
-		case 'X':
-			case 'x':
-				user.adminMenu();
+		cout << "<--Welcome to Ctrl-Alt-Elite's Store!-->" << endl;
+		cout << "----------------------------------------" << endl;
+		cout << "                MAIN MENU" << endl;
+		cout << "----------------------------------------" << endl;
+		cout << "Total items in cart: " << itemCart.size() << endl;
+		cout << "1. Show Cart" << endl;
+		cout << "2. Buy Items" << endl;
+		if (itemCart.size() != 0)
+		{
+			cout << "3. Continue to payment" << endl;
+		}
+		cout << "E. Exit" << endl;
+		cout << "Enter desired choice: " << endl;
+		cin >> input;
+		switch (input)
+		{
+			case '1':
+				user.cart();
 				goto start;
 				break;
-		default:
-			std::cerr << "Invalid option. Please Try Again." << endl;
-			goto start;
-			break;
+			case '2':
+				user.itemBuy();
+				goto start;
+				break;
+			case '3':
+				user.payment();
+				goto start;
+				break;
+			case 'E':
+				return 0;
+				break;
+			case 'X':
+				case 'x':
+					user.adminMenu();
+					goto start;
+					break;
+			default:
+				std::cerr << "Invalid option. Please Try Again." << endl;
+				goto start;
+				break;
+		}
+	}
+	else
+	{
+		return 0;
 	}
 }
