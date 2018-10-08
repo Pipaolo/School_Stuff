@@ -11,6 +11,13 @@ using std::string;
 using std::cout;
 using std::endl;
 
+void createDirectory()
+{
+	system("mkdir resources");
+	system("mkdir users");
+	system("mkdir log");
+}
+
 void addGames(){
 	string name, quantity, price;
 	system("cls");
@@ -24,7 +31,7 @@ void addGames(){
 	cout << "Price: ";
 	cin >> price;
 	std::fstream stockList;
-	stockList.open("stock.txt", std::ios::out | std::ios::app);
+	stockList.open("resources/stock.txt", std::ios::out | std::ios::app);
 	stockList << name << " " << quantity << " " << price << endl;
 	stockList.close();
 }

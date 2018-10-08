@@ -9,6 +9,7 @@ int counter;
 
 int main()
 {
+	createDirectory();
 	string name;
 	start:
 	counter = 0;
