@@ -29,9 +29,6 @@ void addGames(){
 	stockList.close();
 }
 
-void transactionLog(){
-	
-}
 
 int userCount(int counter){
 	int prevCount = 0;
