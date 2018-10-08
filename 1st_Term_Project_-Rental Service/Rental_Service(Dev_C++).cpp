@@ -5,11 +5,13 @@
 void adminMenu();
 void salesMenu(string);
 
+int counter;
+
 int main()
 {
 	string name;
 	start:
-	int counter = 0;
+	counter = 0;
 	userCount(counter);
 	system("cls");
 	char input;
@@ -17,7 +19,7 @@ int main()
 	cout << "----------------------------------------------------" << endl;
 	cout << "                      MAIN MENU" << endl;
 	cout << "----------------------------------------------------" << endl;
-	cout << "We are currently serving: " << userCount(counter) << endl;
+	cout << "Number of Games rented: " << userCount(counter) << endl;
 	cout << "1. Create Account" << endl;
 	cout << "2. Login" << endl;
 	cout << "3. Exit" << endl;
@@ -27,8 +29,6 @@ int main()
 	{
 		case '1':
 			registerUser();
-			counter += 1;
-			userCount(counter);
 			goto start;
 			break;
 		case '2':
@@ -41,6 +41,7 @@ int main()
 		case 'X':
 			case 'x':
 				adminMenu();
+				goto start;
 				break;
 	}
 }
@@ -49,6 +50,7 @@ void salesMenu(string name)
 {
 	char adminInput;
 	repeat:
+	counter = 0;
 	system("cls");
 	cout << "----------------------------------------------------" << endl;
 	cout << "                      SALES MENU" << endl;
@@ -75,6 +77,8 @@ void salesMenu(string name)
 			payment();
 			updateStock();
 			recordTransaction(name);
+			counter += 1;
+			userCount(counter);
 			goto repeat;
 			break;
 		case 'E':

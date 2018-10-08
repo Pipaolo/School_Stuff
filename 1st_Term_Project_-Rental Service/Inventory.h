@@ -56,4 +56,5 @@ int userCount(int counter){
 	}
 	return prevCount;
 }
+
 #endif

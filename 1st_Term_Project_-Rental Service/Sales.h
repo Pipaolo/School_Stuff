@@ -14,11 +14,9 @@ std::vector<string> gCart;
 std::vector<int> gRent;
 std::vector<int> gTotalPrice;
 
-char* convertChar(string &name)
+const char* convertChar(string &name)
 {
-	char convert[name.size() + 1];
-	name.copy(convert, name.size() + 1);
-	convert[name.size()] = '\0';
+	const char * convert = name.c_str();
 	return convert;
 }
 
@@ -131,6 +129,7 @@ void rentGame(string &name)
 		{
 			cout << number[i] << ". " << gameList[i] << "   " << gameSlist[i] << "   " << gamePlist[i] << endl;
 		}
+		cout << "----------------------------------------------------" << endl;	
 		cout << "Enter Desired Choice: ";
 		cin >> inputItem;
 		//initialize input checking
@@ -153,11 +152,13 @@ void rentGame(string &name)
 void showTransactionLog(string &name)
 {
 	string list;
+	system("cls");
 	cout << "----------------------------------------------------" << endl;
 	cout << "                      TRANSACTIONS" << endl;
 	cout << "----------------------------------------------------" << endl;	
 	cout << "GAME TITLE     RENT(IN DAYS)      TOTAL PRICE" << endl;
 	std::ifstream log;
+	
 	log.open(convertChar(name));
 	if(!log.is_open())
 	{
@@ -170,7 +171,9 @@ void showTransactionLog(string &name)
 		{
 			getline(log,list);
 			cout << list << endl;
-		}		
+		}
+		cout << "----------------------------------------------------" << endl;	
+		system("pause");
 	}
 
 }
@@ -197,6 +200,7 @@ void recordTransaction(string &name)
 
 void showMainTransaction()
 {
+	system("cls");
 	cout << "----------------------------------------------------" << endl;
 	cout << "                      ALL TRANSACTIONS" << endl;
 	cout << "----------------------------------------------------" << endl;	
@@ -206,8 +210,10 @@ void showMainTransaction()
 	while(!adminTransactionLog.eof())
 	{
 		getline(adminTransactionLog, list);
-		cout <<  list << endl;
+		cout << "    " <<  list << endl;
 	}
+	cout << "----------------------------------------------------" << endl;	
+	system("pause");
 }
 
 

@@ -109,7 +109,6 @@ string loginUser()
 		cout << "Incorrect username or password!" << endl;
 		system("pause");
 		goto repeat;
-		break;
 	}
 	else
 	{
@@ -138,7 +137,9 @@ void showUsers()
 	{
 		cout << nameList.at(i) << endl;
 	}
+	cout << "----------------------------------------------------" << endl;		
 	nameList.clear();
+	system("pause");
 }
 
 #endif
