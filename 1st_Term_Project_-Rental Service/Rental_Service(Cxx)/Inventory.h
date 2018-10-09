@@ -4,7 +4,6 @@
 
 void addGames(){
 	string name, quantity, price;
-	system("cls");
 	cout << "----------------------------------------------------" << endl;
 	cout << "                      ADMIN MENU" << endl;
 	cout << "----------------------------------------------------" << endl;
@@ -24,7 +23,7 @@ void addGames(){
 	//of fstream, that tells the program to create a file containing
 	// the data that the user had entered. The app means that it will add
 	// the user input to the end of the file.
-	stockList.open("resources/stock.txt", std::ios::out | std::ios::app);
+	stockList.open("stock.txt", std::ios::out | std::ios::app);
 	stockList << name << " " << quantity << " " << price << endl;
 	stockList.close();
 	//Here I closed the file in order for it to be saved

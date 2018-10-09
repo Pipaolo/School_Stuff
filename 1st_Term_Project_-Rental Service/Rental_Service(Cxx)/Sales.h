@@ -39,7 +39,7 @@ void updateStock()
 	std::vector<int> gameSlist;
 	std::fstream stock;
 	//Again initializing a fstream function
-	stock.open("resources/stock.txt");
+	stock.open("stock.txt");
 	while(!stock.eof()) //This says that if the file is not reached its end then continue running
 	{
 		stock >> gName >> gStock >> gPrice;
@@ -61,7 +61,7 @@ void updateStock()
 		}
 	}
 	stock.close();
-	stock.open("resources/stock.txt", std::ios::out);
+	stock.open("stock.txt", std::ios::out);
 	for (unsigned int i = 0; i < gameList.size() - 1; i++)
 	{
 		stock << gameList[i] << " " << gameSlist[i] << " " << gamePlist[i] << endl;
@@ -112,7 +112,7 @@ void rentGame(string &name)
 	cout << "----------------------------------------------------" << endl;	
 	cout << "Game Title      In-Stock      Price" << endl;
 	std::ifstream stockList;
-	stockList.open("resources/stock.txt");
+	stockList.open("stock.txt");
 	if(!stockList.is_open())
 	{
 		cout << "There are currently no games to rent." << endl;
@@ -159,14 +159,13 @@ void rentGame(string &name)
 void showTransactionLog(string &name)
 {
 	string list;
-	string temp = "log/" + name;
 	cout << "----------------------------------------------------" << endl;
 	cout << "                      TRANSACTIONS" << endl;
 	cout << "----------------------------------------------------" << endl;	
 	cout << "GAME TITLE     RENT(IN DAYS)      TOTAL PRICE" << endl;
 	std::ifstream log;
 	
-	log.open(convertChar(temp));
+	log.open(convertChar(name));
 	if(!log.is_open())
 	{
 		cout << "You have no previous transactions." << endl;
@@ -185,16 +184,15 @@ void showTransactionLog(string &name)
 
 void recordTransaction(string &name)
 {
-	string temp = "log/" + name;
 	std::ofstream accHolder;
 	std::ofstream adminTransactionLog;
-	accHolder.open(convertChar(temp), std::ios::app);
+	accHolder.open(convertChar(name), std::ios::app);
 	for (unsigned int i = 0; i < gCart.size(); i++)
 	{
 		accHolder << gCart[i] << "          " << gRent[i] << "          " << "P" << gTotalPrice[i] << endl;
 	}
 	accHolder.close();
-	adminTransactionLog.open("logs/Transactionlog.txt", std::ios::app);
+	adminTransactionLog.open("Transactionlog.txt", std::ios::app);
 	for (unsigned int i = 0; i < gCart.size(); i++)
 	{
 		adminTransactionLog << name << "           " << gCart[i] << "           " << gRent[i] << "           " << "P" << gTotalPrice[i] << endl;
@@ -206,13 +204,12 @@ void recordTransaction(string &name)
 
 void showMainTransaction()
 {
-	system("cls");
 	cout << "----------------------------------------------------" << endl;
 	cout << "                      ALL TRANSACTIONS" << endl;
 	cout << "----------------------------------------------------" << endl;	
 	cout << "    Account Name      GAME TITLE     RENT(IN DAYS)      TOTAL PRICE" << endl;
 	string list;
-	std::ifstream adminTransactionLog("logs/Transactionlog.txt");
+	std::ifstream adminTransactionLog("Transactionlog.txt");
 	while(!adminTransactionLog.eof())
 	{
 		getline(adminTransactionLog, list);

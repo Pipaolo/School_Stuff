@@ -30,7 +30,7 @@ void registerUser()
 	cin >> passCheck;
 	// Initialize File stream
 	std::fstream credentials;
-	credentials.open("users/credentials.dat");
+	credentials.open("credentials.dat");
 	/*
 	Commence Username Duplicate Checker
 	*/
@@ -56,7 +56,7 @@ void registerUser()
 		}
 		credentials.close();
 		// If there is no duplicate then create the file containing the info
-		credentials.open("users/credentials.dat", std::ios::out | std::ios::app);
+		credentials.open("credentials.dat", std::ios::out | std::ios::app);
 		credentials << fullName << endl << userInput << " " << passInput << endl;
 		credentials.close();
 		cout << "Registered Successfully!" << endl;	
@@ -64,7 +64,7 @@ void registerUser()
 	else
 	{
 		// If there is no duplicate then create the file containing the info
-		credentials.open("users/credentials.dat", std::ios::out | std::ios::app);
+		credentials.open("credentials.dat", std::ios::out | std::ios::app);
 		credentials << fullName << endl << userInput << " " << passInput << endl;
 		credentials.close();
 		cout << "Registered Successfully!" << endl;
@@ -75,7 +75,7 @@ string loginUser()
 {
 	repeat:
 	string fullName, username, password, userCombined, checkUser;
-	std::ifstream credentials("users/credentials.dat");
+	std::ifstream credentials("credentials.dat");
 	cout << "----------------------------------------------------" << endl;
 	cout << "                   LOGIN MENU" << endl;
 	cout << "----------------------------------------------------" << endl;
@@ -115,7 +115,7 @@ void showUsers()
 	cout << "                     USERS LIST" << endl;
 	cout << "----------------------------------------------------" << endl;	
 	std::fstream users;
-	users.open("users/credentials.dat");
+	users.open("credentials.dat");
 	while (!users.eof())
 	{
 		getline(users,name);
