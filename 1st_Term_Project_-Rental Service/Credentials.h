@@ -1,14 +1,12 @@
-#ifndef _credentials_
-#define _credentials_
-#include <iostream>
-#include <vector>
-#include <string>
-#include <windows.h>
-#include <fstream>
+#ifndef _CREDENTIALS_
+#define _CREDENTIALS_
+#include "main.h"
+
 using std::cin;
 using std::string;
 using std::cout;
 using std::endl;
+
 
 void registerUser()
 {
@@ -20,11 +18,11 @@ void registerUser()
 	cout << "               Create Account" << endl;
 	cout << "------------------------------------------" << endl;
 	cout << "Enter Full Name: ";
-	if(cin.peek())
-	{
+	if(cin.peek()) //This function is used to check if you pressed enter or not
+	{			   //If yes, then the program will ignore it.
 		cin.ignore();
 	}
-	getline(cin, fullName);
+	getline(cin, fullName); //Get line is a function of string, that can accept spaces as an input
 	cout << "Enter Username: ";
 	cin >> userInput;
 	cout << "Enter Password: ";

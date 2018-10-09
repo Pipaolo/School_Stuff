@@ -1,6 +1,7 @@
+#include "main.h"
 #include "Credentials.h"
-#include "Inventory.h"
 #include "Sales.h"
+#include "Inventory.h"
 
 void adminMenu();
 void salesMenu(string);
@@ -9,7 +10,12 @@ int counter;
 
 int main()
 {
+	/*
+		This function is to create a folder for the Logs, Users,
+		and StockLists. Using the system("mkdir "Name of Folder" ");
+	*/
 	createDirectory();
+	// End of create Directory function
 	string name;
 	start:
 	counter = 0;

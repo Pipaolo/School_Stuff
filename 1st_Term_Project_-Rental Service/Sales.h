@@ -1,19 +1,22 @@
 #ifndef _SALES_
 #define _SALES_
-#include <iostream>
-#include <vector>
-#include <string>
-#include <windows.h>
-#include <fstream>
-using std::cin;
-using std::string;
-using std::cout;
-using std::endl;
+#include "main.h"
 
+
+// These here is what initializing a vector looks like
+// Again, vectors are lists, or containers
+// That automagically adjusts to the user input
 std::vector<string> gCart;
 std::vector<int> gRent;
-std::vector<int> gTotalPrice;
+std::vector<int> gTotalPrice;	
 
+/*
+This function here is just to convert the
+string to a const char*, because that is the
+only data type that the fstream can use.
+But this only the case in C++11, in modern
+versions you can just using strings as a filename
+*/
 const char* convertChar(string &name)
 {
 	const char * convert = name.c_str();
@@ -25,20 +28,29 @@ void updateStock()
 	string gName;
 	int gStock;
 	int gPrice;
+	/*
+	Initialized another set of vectors
+	this is only used to show the available
+	data inside the stock file located in the
+	resources folder
+	*/
 	std::vector<string> gameList;
 	std::vector<int> gamePlist;
 	std::vector<int> gameSlist;
 	std::fstream stock;
+	//Again initializing a fstream function
 	stock.open("resources/stock.txt");
-	while(!stock.eof())
+	while(!stock.eof()) //This says that if the file is not reached its end then continue running
 	{
 		stock >> gName >> gStock >> gPrice;
+		//push back means you add the value of the said variable to the container
 		gameList.push_back(gName);
 		gameSlist.push_back(gStock);
 		gamePlist.push_back(gPrice);		
 	}
 	for (unsigned int i = 0; i < gCart.size(); i++)
 	{
+		// These here is just to print out the available items
 		gName = gCart[i];
 		for (unsigned int index = 0; index < gameList.size() - 1; index++)
 		{
