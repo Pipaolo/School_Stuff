@@ -1,12 +1,35 @@
 #ifndef _CREDENTIALS_
 #define _CREDENTIALS_
 #include "main.h"
-
 using std::cin;
 using std::string;
 using std::cout;
 using std::endl;
+using std::flush;
 
+static string hideInput()
+{
+char x;
+string out;
+	while (x != 13)
+	{
+		x = getch();
+		if (x != 8)
+		{
+			cout << "*";
+			out.push_back(x);
+		}
+		else
+		{
+			if (out.size() != 0)
+			{
+				cout << "\b \b";
+				out.pop_back();
+			}
+		}
+	}
+	return out;
+}
 
 void registerUser()
 {
@@ -26,9 +49,9 @@ void registerUser()
 	cout << "Enter Username: ";
 	cin >> userInput;
 	cout << "Enter Password: ";
-	cin >> passInput;
+	passInput = hideInput();
 	cout << "Re-Enter Password: ";
-	cin >> passCheck;
+	passCheck = hideInput();
 	// Initialize File stream
 	std::fstream credentials;
 	credentials.open("users/credentials.dat");
@@ -87,8 +110,8 @@ string loginUser()
 	cout << "----------------------------------------------------" << endl;
 	cout << "Enter Username: ";
 	cin >> username;
-	cout << "Enter Password: ";
-	cin >> password;
+	cout << "Enter Password: " ;
+	password = hideInput();
 	userCombined = username + " " + password;
 	if(credentials.is_open())
 	{
