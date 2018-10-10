@@ -14,8 +14,10 @@ string out;
 	while (x != 13)
 	{
 		x = getch();
+		if (x == 13)
+		break;
 		if (x != 8)
-		{
+		{	
 			cout << "*";
 			out.push_back(x);
 		}
@@ -50,8 +52,10 @@ void registerUser()
 	cin >> userInput;
 	cout << "Enter Password: ";
 	passInput = hideInput();
+	cout << endl;
 	cout << "Re-Enter Password: ";
 	passCheck = hideInput();
+	cout << endl;
 	// Initialize File stream
 	std::fstream credentials;
 	credentials.open("users/credentials.dat");
@@ -112,6 +116,7 @@ string loginUser()
 	cin >> username;
 	cout << "Enter Password: " ;
 	password = hideInput();
+	cout << endl;
 	userCombined = username + " " + password;
 	if(credentials.is_open())
 	{
