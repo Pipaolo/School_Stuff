@@ -17,12 +17,31 @@ void createDirectory()
 	system("mkdir log");
 }
 
+void inventorySorter(string genre, string name, string quantity, string price)
+{
+	string fileName = "resources/" + genre;
+	convertChar(fileName);
+	std::fstream stock;
+	stock.open(fileName, std::ios::app);
+	if (!stock.is_open())
+	{
+		stock.open(fileName, std::ios::out | std::ios::app);
+		stock << genre << endl << name << " " << quantity << " " << price << endl;
+	}
+	else
+	{
+		stock << name << " " << quantity << " " << price << endl;
+	}
+}
+
 void addGames(){
-	string name, quantity, price;
+	string name, quantity, price, genre;
 	system("cls");
 	cout << "----------------------------------------------------" << endl;
 	cout << "                      ADMIN MENU" << endl;
 	cout << "----------------------------------------------------" << endl;
+	cout << "Enter Game Genre: ";
+	cin >> genre;
 	cout << "Enter Game Title: ";
 	cin >> name;
 	cout << "Number of copies: ";
@@ -39,12 +58,9 @@ void addGames(){
 	//of fstream, that tells the program to create a file containing
 	// the data that the user had entered. The app means that it will add
 	// the user input to the end of the file.
-	stockList.open("resources/stock.txt", std::ios::out | std::ios::app);
-	stockList << name << " " << quantity << " " << price << endl;
-	stockList.close();
+	inventorySorter(genre, name, quantity, price);
 	//Here I closed the file in order for it to be saved
 }
-
 
 int userCount(int counter){
 /*
