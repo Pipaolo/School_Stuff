@@ -8,6 +8,7 @@ void salesMenu(string);
 
 int counter;
 
+
 int main()
 {
 	/*
@@ -74,7 +75,7 @@ void salesMenu(string name)
 	switch (adminInput)
 	{
 		case '1':
-			rentGame(name);
+			rentGame();
 			goto repeat;
 			break;
 		case '2':

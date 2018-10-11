@@ -93,20 +93,23 @@ void payment()
 	}
 	else
 	{
-		cout << "Your change is: " << totalPrice - payment << endl;
+		cout << "Your change is: " << payment - totalPrice << endl;
 		cout << "Thank you!" << endl;
 		system("pause");
 	}
 }
 
-void rentGame(string &name)
+void rentGame()
 {
+	string gGenre;
 	string gName;
 	int gPrice;
 	int gStock;
 	int inputItem;
 	int inputDay;
+	int inputGenre;
 	std::vector<string> gameList;
+	std::vector<string> gameGList;
 	std::vector<int> gamePlist;
 	std::vector<int> gameSlist;
 	std::vector<int> number;
@@ -114,51 +117,91 @@ void rentGame(string &name)
 	cout << "----------------------------------------------------" << endl;
 	cout << "                      RENT A GAME!" << endl;
 	cout << "----------------------------------------------------" << endl;	
-	cout << "Game Title      In-Stock      Price" << endl;
-	std::ifstream stockList;
-	stockList.open("resources/stock.txt");
-	if(!stockList.is_open())
+	cout << "Game Genre" << endl;
+	std::ifstream stock;
+	stock.open("resources/sorter");
+	//This function is here to check whether there is a game available or not
+	if (!stock.is_open())
 	{
 		cout << "There are currently no games to rent." << endl;
-		system("pause");
+		system("pause");		
 	}
 	else
 	{
-		while(!stockList.eof())
+		while(!stock.eof())
 		{
-			stockList >> gName >> gStock >> gPrice;
-			gameList.push_back(gName);
-			gameSlist.push_back(gStock);
-			gamePlist.push_back(gPrice);
+			getline(stock,gGenre);
+			gameGList.push_back(gGenre);
 		}
-		// Add index numbers to list
-		for (unsigned int i = 0; i < gameList.size() - 1; i++)
+		stock.close();
+	}
+	// end of function
+	//Print Menu
+	for (unsigned int i = 0; i < gameGList.size() - 1; i++)
+	{
+		number.push_back(i + 1);
+		cout << number[i] << ". "<< gameGList[i] << endl;
+	}
+	//end of print
+	//Initialize Checking
+	cout << "Enter Game Genre: ";
+	cin >> inputGenre;
+	for (unsigned int i = 0; i < gameGList.size() - 1; i++)
+	{
+		if(inputGenre == number[i])
 		{
-			number.push_back(i+1);
-		}
-		//Print item menu
-		for(unsigned int i = 0; i < gameList.size() - 1; i++)
-		{
-			cout << number[i] << ". " << gameList[i] << "   " << gameSlist[i] << "   " << gamePlist[i] << endl;
-		}
-		cout << "----------------------------------------------------" << endl;	
-		cout << "Enter Desired Choice: ";
-		cin >> inputItem;
-		//initialize input checking
-		for (unsigned int i = 0; i < gameList.size(); i++)
-		{
-			if (inputItem == number[i])
+			string fileName = "resources/" + gameGList[i];
+			repeat:
+			number.clear();
+			system("cls");
+			cout << "----------------------------------------------------" << endl;
+			cout << "                      RENT A GAME!" << endl;
+			cout << "----------------------------------------------------" << endl;
+			cout << "Game Title        In-Stock        Price" << endl;
+			std::fstream stockList;
+			stockList.open(convertChar(fileName));
+			while(!stockList.eof())
 			{
-				cout << gameList[i] << endl;
-				cout << "How many days? ";
-				cin >> inputDay;
-				gCart.push_back(gameList[i]);
-				gRent.push_back(inputDay);
-				gTotalPrice.push_back(gamePlist[i]);
-				stockList.close();
+				stockList >> gName >> gStock >> gPrice;
+				gameList.push_back(gName);
+				gameSlist.push_back(gStock);
+				gamePlist.push_back(gPrice);
+			}
+			stockList.close();
+			for (unsigned int i = 0; i < gameList.size() - 1; i++)
+			{
+				number.push_back(i + 1);
+				cout << number[i] << ". " << gameList[i] << "   " << gameSlist[i] << "   " << gamePlist[i] << endl;
+			}
+			cout << "Enter Desired Game: ";
+			cin >> inputItem;
+			for (unsigned int i = 0; i < gameList.size(); i++)
+			{
+				if(inputItem == number[i])
+				{
+					cout << "You have chosen " << gameList[i] << endl;
+					cout << "How many days would you like to Rent it? ";
+					cin >> inputDay;
+					if (inputDay > 10)
+					{
+						cout << "You cannot rent a game more than 10 days!" << endl;
+						gameList.clear();
+						gamePlist.clear();
+						gameSlist.clear();
+						goto repeat;
+					}
+					else
+					{
+						cout << "Item has been added to your Cart!" << endl;
+						gCart.push_back(gameList[i]);
+						gRent.push_back(inputDay);
+						gTotalPrice.push_back(gamePlist[i]);
+						system("pause");
+					}
+				}
 			}
 		}
-	}	
+	}
 }
 
 void showTransactionLog(string &name)

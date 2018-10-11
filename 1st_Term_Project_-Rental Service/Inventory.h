@@ -22,15 +22,21 @@ void inventorySorter(string genre, string name, string quantity, string price)
 	string fileName = "resources/" + genre;
 	convertChar(fileName);
 	std::fstream stock;
+	std::fstream sort;
+	sort.open("resources/sorter", std::ios::out | std::ios::app);
 	stock.open(fileName, std::ios::app);
 	if (!stock.is_open())
 	{
 		stock.open(fileName, std::ios::out | std::ios::app);
 		stock << genre << endl << name << " " << quantity << " " << price << endl;
+		sort << genre << endl;
+		stock.close();
+		sort.close();
 	}
 	else
 	{
 		stock << name << " " << quantity << " " << price << endl;
+		sort << genre << endl;;
 	}
 }
 

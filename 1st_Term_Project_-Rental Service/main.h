@@ -5,6 +5,7 @@
 #include <string>
 #include <windows.h>
 #include <fstream> // Fstream stands for Files Stream which is needed for storing data
+#include <conio.h>
 
 using std::cin;
 using std::string;
