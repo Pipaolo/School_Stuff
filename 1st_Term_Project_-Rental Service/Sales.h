@@ -7,6 +7,7 @@
 // Again, vectors are lists, or containers
 // That automagically adjusts to the user input
 std::vector<string> gCart;
+std::vector<string> gCartGenre;
 std::vector<int> gRent;
 std::vector<int> gTotalPrice;	
 
@@ -25,47 +26,67 @@ const char* convertChar(string &name)
 
 void updateStock()
 {
+	string gGenre, gGenreCheck;
 	string gName;
-	int gStock;
 	int gPrice;
-	/*
-	Initialized another set of vectors
-	this is only used to show the available
-	data inside the stock file located in the
-	resources folder
-	*/
-	std::vector<string> gameList;
-	std::vector<int> gamePlist;
-	std::vector<int> gameSlist;
+	int gStock;
+
+	std::vector<string> nameList;
+	std::vector<int> priceList;
+	std::vector<int> stockList;
+
 	std::fstream stock;
-	//Again initializing a fstream function
-	stock.open("resources/stock.txt");
-	while(!stock.eof()) //This says that if the file is not reached its end then continue running
+
+while (!gCart.empty())
 	{
-		stock >> gName >> gStock >> gPrice;
-		//push back means you add the value of the said variable to the container
-		gameList.push_back(gName);
-		gameSlist.push_back(gStock);
-		gamePlist.push_back(gPrice);		
-	}
-	for (unsigned int i = 0; i < gCart.size(); i++)
-	{
-		// These here is just to print out the available items
-		gName = gCart[i];
-		for (unsigned int index = 0; index < gameList.size() - 1; index++)
+	for (unsigned int i = 0; i < gCartGenre.size(); i++)
 		{
-			if (gName == gameList[index])
+			gGenreCheck = gCartGenre[i];
+			gGenre = "resources/" + gCartGenre[i];
+			stock.open(convertChar(gGenre));
+			while(!stock.eof())
 			{
-				gameSlist[i] -= 1;
+				stock >> gName >> gStock >> gPrice;
+				nameList.push_back(gName);
+				stockList.push_back(gStock);
+				priceList.push_back(gPrice);
 			}
+			stock.clear();
+			stock.close();
+			for (unsigned int x = 0; x < nameList.size(); x++)
+			{
+				if (gCart[x] == nameList[x])
+				{
+					int temp = x;
+					cout << temp - x;
+					stockList[x - temp] -= 1;
+				}
+			}
+			stock.open(convertChar(gGenre), std::ios::out);
+			for (unsigned int i = 0; i < nameList.size() - 1; i++)
+			{
+				stock << nameList[i] << " " << stockList[i] << " " << priceList[i] << endl;
+			}
+			/*
+				Clear all vectors, so that we can assign new
+				values to it in the next loop
+			*/
+			nameList.clear();
+			priceList.clear();
+			stockList.clear();
+			stock.clear();
+			stock.close();
+			if (gGenreCheck == gCartGenre[i + 1])
+			{
+				continue;
+			}
+			break;
 		}
-	}
-	stock.close();
-	stock.open("resources/stock.txt", std::ios::out);
-	for (unsigned int i = 0; i < gameList.size() - 1; i++)
-	{
-		stock << gameList[i] << " " << gameSlist[i] << " " << gamePlist[i] << endl;
-	}
+			gCart.erase(gCart.begin());
+			gCartGenre.erase(gCartGenre.begin());
+			gRent.erase(gRent.begin());
+			gTotalPrice.erase(gTotalPrice.begin());
+	}	
 }
 
 void payment()
@@ -151,6 +172,7 @@ void rentGame()
 		if(inputGenre == number[i])
 		{
 			string fileName = "resources/" + gameGList[i];
+			gCartGenre.push_back(gameGList[i]);
 			repeat:
 			number.clear();
 			system("cls");
@@ -253,6 +275,7 @@ void recordTransaction(string &name)
 	gCart.clear();
 	gRent.clear();
 	gTotalPrice.clear();
+	gCartGenre.clear();
 }
 
 void showMainTransaction()
