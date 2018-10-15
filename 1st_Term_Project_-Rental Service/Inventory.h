@@ -2,118 +2,138 @@
 #define _INVENTORY_
 #include "main.h"
 
-
-void createDirectory()
+class Log
 {
-/*
-	Here is the createDirectory Function is called
-	so basically it's using the commands of the
-	windows console to create a folder. Note: This
-	only works on windows and not on other Operating
-	Sytems.
-*/
-	system("mkdir resources");
-	system("mkdir users");
-	system("mkdir log");
-}
+	public:
+		string title;
+		int day, price;
+		vector<string> titleList;
+		vector<int> rentDayList;
+		vector<int> totalPriceList;
+	public:
+		//Used to updating the stock
+		int index = 0; 
+		vector<string> NameList;
+		vector<int>	StockList;
+		vector<int> PriceList;
+		fstream stock;
+};
 
-void inventorySorter(string genre, string name, string quantity, string price)
+
+void updateStock()
 {
-	string fileName = "resources/" + genre;
-	convertChar(fileName);
-	std::fstream stock;
-	std::fstream sort;
-	sort.open("resources/sorter", std::ios::out | std::ios::app);
-	stock.open(fileName, std::ios::app);
-	if (!stock.is_open())
+	string fileName; 
+	string gameName;
+	int Stock;
+	int Price;
+	Log game;
+	//Read The Existing File Before Writing
+	while (!cartGenre.empty())
 	{
-		stock.open(fileName, std::ios::out | std::ios::app);
-		stock << genre << endl << name << " " << quantity << " " << price << endl;
-		sort << genre << endl;
-		stock.close();
-		sort.close();
-	}
-	else
-	{
-		stock << name << " " << quantity << " " << price << endl;
-		sort << genre << endl;;
-	}
-}
-
-void addGames(){
-	string name, quantity, price, genre;
-	system("cls");
-	cout << "----------------------------------------------------" << endl;
-	cout << "                      ADMIN MENU" << endl;
-	cout << "----------------------------------------------------" << endl;
-	cout << "Enter Game Genre: ";
-	cin >> genre;
-	cout << "Enter Game Title: ";
-	cin >> name;
-	cout << "Number of copies: ";
-	cin >> quantity;
-	cout << "Price: ";
-	cin >> price;
-	//Here I initialize the file of the stock list
-	//fstream has a default property that makes you
-	// read and write the file at the same time
-	// The syntax for fstream is. "fstream (nameofvariable)";
-	std::fstream stockList;
-	//I open the file that is found in the resources directory
-	//that is named stock.txt, ios::out and ios::app are functions
-	//of fstream, that tells the program to create a file containing
-	// the data that the user had entered. The app means that it will add
-	// the user input to the end of the file.
-	inventorySorter(genre, name, quantity, price);
-	//Here I closed the file in order for it to be saved
-}
-
-int userCount(int counter){
-/*
-	This function here is to count how many
-	games are being rented at the moment using
-	vectors
-*/
-	int prevCount = 0;
-	std::fstream count("userCounter");
-	/*
-		First I initialized the file, already mentioned
-		above. Then I checked if the value of counter is not equal
-		to 0, this is just to check whether a game has been
-		rented or not
-	*/
-	if (counter != 0)
-	{
-		/*
-			If someone rents a game
-			then the program will check if there is a previous value
-			if there is then it will get the value then add to the
-			counter after that it will write it to the file.
-		*/
-		count >> prevCount;
-		count.clear();
-		count.seekp(0);
-		count.tellp();
-		int temp = counter + prevCount;
-		count << temp;
-		count.close();
-	} 
-	else
-	{
-		/*
-			This is here if the file is not available
-			then it will create the file so that it can be
-			read and be edited.
-		*/
-		if (!count.is_open())
+		fileName = "resources/" + cartGenre[game.index];
+		game.stock.open(convertString(fileName));
+		while (!game.stock.eof())
 		{
-			count.open("userCounter", std::ios::out);
-			count << counter;
+			//Start Reading
+			game.stock >> gameName >> Stock >> Price;
+			game.NameList.push_back(gameName);
+			game.StockList.push_back(Stock);
+			game.PriceList.push_back(Price);
 		}
-		count >> prevCount;
-		count.close();
+		game.stock.close();
+		for (unsigned int i = 0; i < cartGameTitle.size(); i++)
+		{
+			gameName = cartGameTitle[i];
+			for (unsigned int i = 0; i < game.NameList.size() - 1; i++)
+			{
+				if ( gameName == game.NameList[i])
+				{
+					game.StockList[i] -= 1;
+					break;
+				}				
+			}
+		}
+		game.stock.open(convertString(fileName), ios::out);
+		for (unsigned int i = 0; i < game.NameList.size() - 1; i++)
+		{
+			game.stock << game.NameList[i] << "    " << game.StockList[i] << "    " << game.PriceList[i] << endl;
+		}
+		game.stock.close();
+		game.NameList.clear();
+		game.StockList.clear();
+		game.PriceList.clear();
+		cartGenre.erase(cartGenre.begin());
 	}
-	return prevCount;
+	cartGenre.clear();
+	cartGameTitle.clear();
+	cartGameDays.clear();
+	cartTotalPrice;
 }
+
+void RecordTransaction(string &name, string &gameTitle, int &rentalDays, int &totalPrice)
+{
+	string fileName = "log/" + name;
+	fstream userLog;
+	fstream	adminLog;
+	userLog.open(convertString(fileName), ios::out | ios::app);
+	userLog << gameTitle << "  " << rentalDays << "   " << totalPrice << endl;
+	userLog.close();
+	//Record the logs in the admin folder
+	adminLog.open("admin/TransactionLog.txt", ios::out | ios::app);
+	adminLog << name << endl << gameTitle << "  " << rentalDays << "   " << totalPrice << endl;
+	adminLog.close();
+}
+
+void userTransactions (string& name)
+{
+	system("cls");
+	int x = 40, y = 0;		
+	Log game;
+	string fileName = "log/" + name;
+	fstream userLog;
+	userLog.open(convertString(fileName));
+	gotoxy(x, y);
+	cout << "------------------------------------------------------\n";
+	y += 1;
+	gotoxy(x, y);
+	cout << "-                    TRANSACTIONS                    -\n";
+	y += 1;
+	gotoxy(x, y);
+	cout << "------------------------------------------------------\n";
+	if(!userLog.is_open())
+	{
+		y += 1;
+		gotoxy(x, y);
+		cout << "You have no past transactions!\n";
+		y += 1;
+		gotoxy(x, y);
+		system("pause");
+	}
+	else
+	{
+		while (!userLog.eof())
+		{
+			userLog >> game.title >> game.day >> game.price;
+			game.titleList.push_back(game.title);
+			game.rentDayList.push_back(game.day);
+			game.totalPriceList.push_back(game.price);
+		}
+		y += 1;
+		gotoxy(x, y);
+		cout << "(Format: GameTitle, Rent in Days, Total Price)\n";
+		//print Transactions
+		y += 1;
+		for (unsigned int i = 0; i < game.titleList.size() - 1; i++)
+		{
+			gotoxy(x, y);
+			cout << game.titleList[i] << "   " << game.rentDayList[i] << "   " << game.totalPriceList[i] << endl;
+			y++;
+		}
+		y += 1;
+		gotoxy(x, y);
+		system("pause");
+	}
+
+}	
 
 #endif

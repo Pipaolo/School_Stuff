@@ -1,13 +1,12 @@
 #ifndef _CREDENTIALS_
 #define _CREDENTIALS_
 #include "main.h"
-using std::cin;
-using std::string;
-using std::cout;
-using std::endl;
-using std::flush;
+	
+string duplicateCheck();
+void storeUserData(string&, string&, string&);
+string userNameTemp;
 
-static string hideInput()
+static const string hideInput()
 {
 char x;
 string out;
@@ -33,139 +32,254 @@ string out;
 	return out;
 }
 
-void registerUser()
+void registerUser() 
 {
+	string fullName, userInput, passInput, passCheck;
 	repeat:
-	string fullName;
-	string userInput, userCheck, passInput, passCheck;
 	system("cls");
-	cout << "------------------------------------------" << endl;
-	cout << "               Create Account" << endl;
-	cout << "------------------------------------------" << endl;
+	gotoxy(40,10);
+	cout << "-----------------------------------------------" << endl;
+	gotoxy(40,11);
+	cout << "\t\tCREATE AN ACCOUNT" << endl;
+	gotoxy(40,12);
+	cout << "-----------------------------------------------" << endl;
+	gotoxy(40,13);
 	cout << "Enter Full Name: ";
-	if(cin.peek()) //This function is used to check if you pressed enter or not
-	{			   //If yes, then the program will ignore it.
+	if (cin.peek())
+	{
 		cin.ignore();
 	}
-	getline(cin, fullName); //Get line is a function of string, that can accept spaces as an input
+	getline(cin, fullName);
+	gotoxy(40,14);
 	cout << "Enter Username: ";
-	cin >> userInput;
+	userInput = duplicateCheck();
+	gotoxy(40,15);
 	cout << "Enter Password: ";
 	passInput = hideInput();
-	cout << endl;
-	cout << "Re-Enter Password: ";
-	passCheck = hideInput();
-	cout << endl;
-	// Initialize File stream
-	std::fstream credentials;
-	credentials.open("users/credentials.dat");
-	/*
-	Commence Username Duplicate Checker
-	*/
-	if(credentials.is_open())
+	gotoxy(40,16);
+	cout << "Re-enter Password: ";
+    cin.ignore(100,'\n');
+	passCheck = hideInput();	
+	if (passInput == passCheck) 
 	{
-		while (!credentials.eof())
-		{
-			credentials >> userCheck;
-			if (userInput == userCheck)
-			{
-				cout << "Username Taken!" << endl;
-				system("pause");
-				credentials.close();
-				goto repeat;
-				break;
-			} 
-			else if (passInput != passCheck)
-			{
-				cout << "Password is not the same!" << endl;
-				system("pause");
-				credentials.close();
-				goto repeat;
-				break;
-			}
-		}
-		credentials.close();
-		// If there is no duplicate then create the file containing the info
-		credentials.open("users/credentials.dat", std::ios::out | std::ios::app);
-		credentials << fullName << endl << userInput << " " << passInput << endl;
-		credentials.close();
-		cout << "Registered Successfully!" << endl;
-		system("pause");		
+		system("cls");
+		gotoxy(40,10);
+		cout << "--------------------------------------------------" << endl;
+		gotoxy(40,11);
+		cout << "\t\tREGISTERED SUCCESSFULLY!" << endl;
+		gotoxy(40,12);
+		cout << "--------------------------------------------------" << endl;
+		storeUserData(fullName, userInput, passInput);
+		system("pause");
 	}
 	else
 	{
-		// If there is no duplicate then create the file containing the info
-		credentials.open("users/credentials.dat", std::ios::out | std::ios::app);
-		credentials << fullName << endl << userInput << " " << passInput << endl;
-		credentials.close();
-		cout << "Registered Successfully!" << endl;
+		system("cls");
+		gotoxy(40,10);
+		cout << "----------------------------------------------------" << endl;
+		gotoxy(40,11);
+		cout << "\t\tPASSWORD IS NOT THE SAME!" << endl;
+		gotoxy(40,12);
+		cout << "----------------------------------------------------" << endl;	
 		system("pause");
+		goto repeat;
 	}
 }
 
-string loginUser()
+string loginUser() 
 {
 	repeat:
+	string userInput;
+	string passInput, passCheck, fullName;
+	string fileName = "users/";
 	system("cls");
-	string fullName, username, password, userCombined, checkUser;
-	std::ifstream credentials("users/credentials.dat");
-	cout << "----------------------------------------------------" << endl;
-	cout << "                   LOGIN MENU" << endl;
-	cout << "----------------------------------------------------" << endl;
+	gotoxy(40,10);
+	cout << "-----------------------------------------" << endl;
+	gotoxy(40,11);
+	cout << "\t\tLOGIN" << endl;
+	gotoxy(40,12);
+	cout << "-----------------------------------------" << endl;	
+	gotoxy(40,13);
 	cout << "Enter Username: ";
-	cin >> username;
-	cout << "Enter Password: " ;
-	password = hideInput();
-	cout << endl;
-	userCombined = username + " " + password;
-	if(credentials.is_open())
+	cin >> userInput;
+	userNameTemp = userInput;
+	gotoxy(40,14);
+	cout << "Enter Password: ";
+	passInput = hideInput();
+	//Read user file
+	fileName += userInput;
+	fstream userFile;
+	userFile.open(convertString(fileName));
+	if (!userFile.is_open())
 	{
-		while(!credentials.eof())
-		{
-			getline(credentials,fullName);
-			getline(credentials,checkUser);
-			if (userCombined == checkUser)
-			{
-				cout << "Login Successfully!" << endl;
-				system("pause");
-				return fullName;
-				break;
-			}
-		}			
-		cout << "Incorrect username or password!" << endl;
+		system("cls");
+		gotoxy(40,10);
+		cout << "---------------------------------------------" << endl;
+		gotoxy(40,11);
+		cout << "\t\tINVALID USERNAME/PASSWORD"<< endl;
+		gotoxy(40,12);
+		cout << "---------------------------------------------" << endl;
 		system("pause");
-		goto repeat;
 	}
 	else
 	{
-		std::cerr << "There is no existing users!" << endl;
+		while (!userFile.eof())
+		{
+			getline(userFile, fullName);
+			getline(userFile, passCheck);
+			if (passInput == passCheck)
+			{
+				system("cls");
+				gotoxy(40,10);
+				cout << "-----------------------------------------------------" << endl;
+				gotoxy(40,11);
+				cout << "\t\tWELCOME " << fullName << "!"<< endl;
+				gotoxy(40,12);
+				cout << "-----------------------------------------------------" << endl;
+				Sleep(1000);
+				return fullName;
+			}		
+		}
+		system("cls");
+		gotoxy(40,10);
+		cout << "-----------------------------------------------------" << endl;
+		gotoxy(40,11);
+		cout << "             INVALID USERNAME/PASSWORD\n";
+		gotoxy(40,12);
+		cout << "-----------------------------------------------------" << endl;
+		gotoxy(40,13);
+		system("pause");
+		goto repeat;				
+	}
+}
+
+int accountManage()
+{
+	repeat:
+	int x = 40, y = 0; //Coorinates for the screen
+	string fileName = "users/" + userNameTemp;
+	string UserFullName;
+	string oldPassword;
+	string oldPasswordCheck;
+	string newPassword;
+	string newPasswordCheck;
+	// These Variables are used for checking the user inputs
+	vector<string> prevFullName;
+	vector<string> prevPassword;
+	//Vectors to store the previous data	
+	system("cls");
+	gotoxy(x,y);
+	cout << fileName;
+	cout << "----------------------------------------------------" << endl;
+	y += 1;
+	gotoxy(x,y);
+	cout << "\t\tCHANGE PASSWORD" << endl;
+	y += 1;
+	gotoxy(x,y);
+	cout << "----------------------------------------------------" << endl;
+	y += 1;
+	gotoxy(x,y);
+	cout << "Enter Old Password: ";
+	oldPassword = hideInput();	
+	//Initialize password checking in file
+	fstream userData;
+	userData.open(convertString(fileName));
+	while (!userData.eof())
+	{
+		getline(userData, UserFullName);
+		getline(userData, oldPasswordCheck);
+		if (oldPassword != oldPasswordCheck)
+		{
+			y += 1;
+			gotoxy(x,y);
+			cout << "Invalid Password\n";
+			y += 1;
+			gotoxy(x,y);
+			system("pause");
+			goto repeat;
+		}
+		else
+		{
+			prevFullName.push_back(UserFullName);
+			prevPassword.push_back(oldPassword);
+		}
+	}	
+	userData.close();
+	y += 1;
+	gotoxy(x,y);
+	cout << "Enter New Password: ";
+	newPassword = hideInput();
+	y += 1;
+	gotoxy(x,y);
+	cout << "Re-Enter Password: ";
+    cin.ignore(100,'\n');
+	newPasswordCheck = hideInput();
+	if (newPassword == newPasswordCheck)
+	{	
+		
+		userData.open(convertString(fileName), ios::out);
+		for (unsigned int i = 0; i < prevFullName.size(); i++)
+		{
+			prevPassword[i] = newPassword;
+			userData << prevFullName[i] << endl << prevPassword[i];
+		}
+		userData.close();
+		y += 1;
+		gotoxy(x,y);
+		cout << "Your password has been changed!\n";
+		y += 1;
+		gotoxy(x,y);
+		system("pause");
+		return 0;
+	}
+	else
+	{
+		y += 1;
+		gotoxy(x,y);
+		cout << "Password is not the same\n";
+		y += 1;
+		gotoxy(x,y);
 		system("pause");
 		goto repeat;
 	}
 }
 
-void showUsers()
+/*
+	This function here is to check if there is
+	an existing username or not.
+*/
+string duplicateCheck() 
 {
-	std::vector<string> nameList;
-	string name;
-	system("cls");
-	cout << "----------------------------------------------------" << endl;
-	cout << "                     USERS LIST" << endl;
-	cout << "----------------------------------------------------" << endl;	
-	std::fstream users;
-	users.open("users/credentials.dat");
-	while (!users.eof())
+	string fileName = "users/";
+	string username;
+	cin >> username;
+	fileName += username;
+	fstream userFile;
+	userFile.open(convertString(fileName));
+	if (!userFile.is_open())
 	{
-		getline(users,name);
-		nameList.push_back(name);
+		return username;	
 	}
-	for (unsigned int i = 0; i < nameList.size() - 1; i += 2)
+	else
 	{
-		cout << nameList.at(i) << endl;
+		system("cls");
+		gotoxy(40,10);
+		cout << "---------------------------------------------" << endl;
+		gotoxy(40,11);
+		cout << "\t\tUsername Taken!" << endl;
+		gotoxy(40,12);
+		cout << "---------------------------------------------" << endl;
+		system("pause");
+		registerUser();
 	}
-	cout << "----------------------------------------------------" << endl;		
-	nameList.clear();
-	system("pause");
+}
+
+void storeUserData (string &fullName, string &username, string &password) 
+{
+	string fileName = "users/" + username;
+	fstream userFile;
+	userFile.open(convertString(fileName), ios::out);
+	userFile << fullName << endl << password;
 }
 
 #endif

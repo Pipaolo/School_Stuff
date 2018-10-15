@@ -1,7 +1,6 @@
 # GAME RENTAL SYSTEM (Academic Purposes Only)
 ## Features
-- Rented Games Counter
-- Has it's own Account Management
+- Has it's own Account Management (Can now Change Password! Yey!)
 - Records Transaction Logs
 - Creates Directory (Windows Only)
 - Secret Admin Menu

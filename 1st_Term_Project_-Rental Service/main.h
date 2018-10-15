@@ -1,16 +1,48 @@
 #ifndef _MAIN_
 #define _MAIN_
 #include <iostream>
-#include <vector> //Vecors are arrays, that adjusts based on the value that is being stored in it
+#include <fstream>
+#include <vector>
 #include <string>
 #include <windows.h>
-#include <fstream> // Fstream stands for Files Stream which is needed for storing data
 #include <conio.h>
-#include <algorithm>
+using namespace std;
 
-using std::cin;
-using std::string;
-using std::cout;
-using std::endl;
+vector<string> cartGenre;
+vector<string> cartGameTitle;
+vector<int> cartGameDays;
+vector<int> cartTotalPrice;
+
+void createDirectory () 
+{
+/*
+	Here is the createDirectory Function is called
+	so basically it's using the commands of the
+	windows console to create a folder. Note: This
+	only works on windows and not on other Operating
+	Sytems.
+*/
+	system("mkdir resources");
+	system("mkdir users");
+	system("mkdir log");
+	system("mkdir admin");
+}
+
+void gotoxy(const int x, const int y)
+{
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	
+	COORD CenterText;
+	CenterText.X = x;
+	CenterText.Y = y;
+	
+	SetConsoleCursorPosition(hConsole, CenterText);
+}
+
+inline const char* convertString(string &name)
+{
+	const char * converted = name.c_str();
+	return converted;
+}
 
 #endif
