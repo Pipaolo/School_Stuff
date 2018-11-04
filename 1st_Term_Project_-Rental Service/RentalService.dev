@@ -1,6 +1,6 @@
 [Project]
 FileName=RentalService.dev
-Name=RentalService
+Name=Rental Service
 Type=1
 Ver=2
 ObjFiles=
@@ -27,9 +27,9 @@ CommandLine=
 Folders=
 IncludeVersionInfo=0
 SupportXPThemes=0
-CompilerSet=0
-CompilerSettings=0000000000000000000000000
-UnitCount=6
+CompilerSet=1
+CompilerSettings=0000000000000000001000000
+UnitCount=7
 
 [VersionInfo]
 Major=1
@@ -51,16 +51,6 @@ AutoIncBuildNr=0
 SyncProduct=1
 
 [Unit1]
-FileName=main.cpp
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit2]
 FileName=inventory.h
 CompileCpp=1
 Folder=
@@ -70,8 +60,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit3]
-FileName=sales.h
+[Unit2]
+FileName=main.cpp
 CompileCpp=1
 Folder=
 Compile=1
@@ -80,7 +70,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit4]
+[Unit3]
 FileName=main.h
 CompileCpp=1
 Folder=
@@ -90,8 +80,18 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
+[Unit4]
+FileName=sales.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
 [Unit5]
-FileName=credentials.h
+FileName=stats.h
 CompileCpp=1
 Folder=
 Compile=1
@@ -101,6 +101,19 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit6]
+FileName=userAccounts.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit8]
+FileName=admin.cpp
+
+[Unit7]
 FileName=admin.h
 CompileCpp=1
 Folder=
