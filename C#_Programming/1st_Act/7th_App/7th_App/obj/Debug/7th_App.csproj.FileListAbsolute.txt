@@ -1,0 +1,6 @@
+C:\Users\ciit\Desktop\C#_Activities\1st_Act\7th_App\7th_App\bin\Debug\7th_App.exe.config
+C:\Users\ciit\Desktop\C#_Activities\1st_Act\7th_App\7th_App\bin\Debug\7th_App.exe
+C:\Users\ciit\Desktop\C#_Activities\1st_Act\7th_App\7th_App\bin\Debug\7th_App.pdb
+C:\Users\ciit\Desktop\C#_Activities\1st_Act\7th_App\7th_App\obj\Debug\7th_App.csproj.CoreCompileInputs.cache
+C:\Users\ciit\Desktop\C#_Activities\1st_Act\7th_App\7th_App\obj\Debug\7th_App.exe
+C:\Users\ciit\Desktop\C#_Activities\1st_Act\7th_App\7th_App\obj\Debug\7th_App.pdb

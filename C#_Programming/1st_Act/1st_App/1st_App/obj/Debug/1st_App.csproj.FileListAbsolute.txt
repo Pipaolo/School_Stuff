@@ -1,0 +1,7 @@
+C:\Users\ciit\Desktop\C#_Activities\1st_Act\1st_App\1st_App\bin\Debug\1st_App.exe.config
+C:\Users\ciit\Desktop\C#_Activities\1st_Act\1st_App\1st_App\bin\Debug\1st_App.exe
+C:\Users\ciit\Desktop\C#_Activities\1st_Act\1st_App\1st_App\bin\Debug\1st_App.pdb
+C:\Users\ciit\Desktop\C#_Activities\1st_Act\1st_App\1st_App\obj\Debug\1st_App.csproj.CoreCompileInputs.cache
+C:\Users\ciit\Desktop\C#_Activities\1st_Act\1st_App\1st_App\obj\Debug\1st_App.exe
+C:\Users\ciit\Desktop\C#_Activities\1st_Act\1st_App\1st_App\obj\Debug\1st_App.pdb
+C:\Users\ciit\Desktop\C#_Activities\1st_Act\1st_App\1st_App\obj\Debug\1st_App.csprojAssemblyReference.cache
