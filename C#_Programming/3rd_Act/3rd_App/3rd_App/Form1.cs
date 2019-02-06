@@ -31,7 +31,7 @@ namespace _3rd_App
             int firstInput = 0;
             int secondInput = 0;
             int quotient = 0;
-
+            int result = 0;
 
             string first_Input = Interaction.InputBox("Enter 1st Number", "3rd_App", "---");
             string second_Input = Interaction.InputBox("Enter 2nd Number", "3rd_App", "---");
@@ -39,13 +39,14 @@ namespace _3rd_App
             firstInput = Convert.ToInt32(first_Input);
             secondInput = Convert.ToInt32(second_Input);
 
-            while (firstInput != 0)
+            while (firstInput != 0 && firstInput > 0)
             {
-                firstInput -= secondInput;
                 quotient++;
+                result = firstInput;
+                firstInput -= secondInput;            
             }
             
-            MessageBox.Show($"Quotient is: {quotient}, Remainder: {firstInput}");
+            MessageBox.Show($"Quotient is: {quotient - 1}, Remainder: {result}");
             this.Close();
         }
     }
