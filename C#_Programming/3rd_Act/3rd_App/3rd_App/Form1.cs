@@ -41,12 +41,12 @@ namespace _3rd_App
 
             while (firstInput != 0 && firstInput > 0)
             {
-                quotient++;
-                result = firstInput;
+                result = firstInput - secondInput;
                 firstInput -= secondInput;            
+                quotient++;
             }
             
-            MessageBox.Show($"Quotient is: {quotient - 1}, Remainder: {result}");
+            MessageBox.Show($"Quotient is: {quotient}, Remainder: {result}");
             this.Close();
         }
     }

@@ -29,6 +29,8 @@ namespace _2nd_App
         {
             int firstInput = 0;
             int secondInput = 0;
+            int temp1 = 0;
+            int temp2 = 0;
             int result = 0;
 
             string first_Input = Interaction.InputBox("Enter 1st Number", "2nd_App", "---");
@@ -36,7 +38,10 @@ namespace _2nd_App
 
             firstInput = Convert.ToInt32(first_Input);
             secondInput = Convert.ToInt32(second_Input);
-            
+
+            temp1 = firstInput;
+            temp2 = secondInput;
+
             if (firstInput < 0 && secondInput >= 0 || firstInput >= 0 && secondInput < 0)
             {
                 for (int i = 0; i < secondInput; i++)
@@ -54,7 +59,7 @@ namespace _2nd_App
                 }
             }
 
-            MessageBox.Show($"Output is: {result}");
+            MessageBox.Show($"{temp1} * {temp2} = {result}");
             this.Close();
         }
     }

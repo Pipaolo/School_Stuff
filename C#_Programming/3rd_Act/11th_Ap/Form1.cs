@@ -44,7 +44,7 @@ namespace _11th_Ap
                 userInput /= 10;         
             }
 
-            MessageBox.Show(reversed.ToString());
+            MessageBox.Show($"{user_Input} reverse is " + reversed.ToString());
             this.Close();
         }
     }

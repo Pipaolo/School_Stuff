@@ -44,11 +44,11 @@ namespace _7th_App
             if (temp == userInput)
             {
 
-                MessageBox.Show($"Number is perfect");
+                MessageBox.Show($"{user_Input} is perfect number");
             }
             else
             {
-                MessageBox.Show($"Number is not perfect{temp}");
+                MessageBox.Show($"{user_Input} is not perfect number");
             }
             this.Close();
         }

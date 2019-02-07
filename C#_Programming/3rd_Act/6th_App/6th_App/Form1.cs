@@ -36,7 +36,7 @@ namespace _6th_App
                 temp = temp * i;
             }
 
-            MessageBox.Show(temp.ToString());
+            MessageBox.Show($"Factorial of {user_Input} is " + temp.ToString());
             this.Close();
 
         }

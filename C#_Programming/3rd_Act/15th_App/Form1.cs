@@ -40,11 +40,11 @@ namespace _15th_App
             }
             if (compare == reversed)
             {
-                output = "The number you have entered is indeed a palindrome!";
+                output = $"{user_Input} is indeed a palindrome!";
             }
             else
             {
-                output = "The number you have entered is not a palindrome!";
+                output = $"{user_Input} is not a palindrome!";
             }
             MessageBox.Show(output);
             this.Close();
