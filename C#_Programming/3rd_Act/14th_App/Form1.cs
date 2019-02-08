@@ -24,9 +24,11 @@ namespace _14th_App
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            List<int> listOutput = new List<int>();
+            int[] arrOutput;
             int userInput = 0;
             int result = 0;
+            int countDigits = 0;
+            int iterator = 0;
             int temp = 0;
             string output = "";
 
@@ -34,17 +36,28 @@ namespace _14th_App
 
             userInput = Convert.ToInt32(user_Input);
 
+            temp = userInput;
+
+            while(temp > 0)
+            {
+                temp /= 10;
+                countDigits++;
+            }
+
+            arrOutput = new int[countDigits];
+
             while (userInput > 0)
             {
                 temp = userInput % 10;
                 userInput /= 10;
-                listOutput.Add(temp);
+                arrOutput[iterator] = temp;
                 result += temp;
+                iterator++;
             }
 
-            for (int i = 1; i <= listOutput.Count; i++)
+            for (int i = 0; i < countDigits; i++)
             {
-                output += listOutput[listOutput.Count - i] + "+";
+                output += arrOutput[(countDigits - 1 ) - i] + "+";
             }
 
             output = output.Remove(output.Length - 1);
