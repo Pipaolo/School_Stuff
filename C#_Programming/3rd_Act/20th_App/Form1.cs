@@ -21,7 +21,7 @@ namespace _20th_App
         private void Form1_Load(object sender, EventArgs e)
         {
             string finalOutput = "";
-            string user_Input = Interaction.InputBox("Enter Number", "20th_App", "---");
+            string user_Input = Interaction.InputBox("Enter a Sentence/Words", "20th_App", "---");
             string inputCopy = user_Input;
             int charCount = 0;
             int counter = 0;
