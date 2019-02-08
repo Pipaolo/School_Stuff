@@ -24,10 +24,12 @@ namespace _12th_App
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            List<string> output = new List<string>();
             int userInput = 0;
             int remainder = 0;
             int temp = 0;
+            int countDigits = 0;
+            int iterator = 0;
+            string[] arrResult;
             string finalResult = "";
 
             string[] englishNumbers = new string[10] {"zero", "one", "two", "three", "four", "five",
@@ -36,6 +38,19 @@ namespace _12th_App
             string user_Input = Interaction.InputBox("Enter Number", "12th_App", "---");
 
             userInput = Convert.ToInt32(user_Input);
+
+            // This part is to get the number of digits of a number
+            temp = userInput;
+
+            while (temp > 0)
+            {
+                temp /= 10;
+                countDigits++;
+            }
+
+            arrResult = new string[countDigits];
+            //End of getting the digit
+
             while (userInput > 0)
             {
                 remainder = userInput % 10;
@@ -44,43 +59,44 @@ namespace _12th_App
                 switch (remainder)
                 {
                 case 0:
-                        output.Add(englishNumbers[0]);
+                    arrResult[iterator] += englishNumbers[0];
                     break;
                 case 1:
-                    output.Add(englishNumbers[1]);
+                    arrResult[iterator] += englishNumbers[1];
                     break;
                 case 2:
-                    output.Add(englishNumbers[2]);
+                    arrResult[iterator] += englishNumbers[2];
                     break;
                 case 3:
-                    output.Add(englishNumbers[3]);
+                    arrResult[iterator] += englishNumbers[3];
                     break;
                 case 4:
-                    output.Add(englishNumbers[4]);
+                    arrResult[iterator] += englishNumbers[4];
                     break;
                 case 5:
-                    output.Add(englishNumbers[5]);
+                    arrResult[iterator] += englishNumbers[5];
                     break;
                 case 6:
-                    output.Add(englishNumbers[6]);
-                    break;
+                    arrResult[iterator] += englishNumbers[6];
+                     break;
                 case 7:
-                    output.Add(englishNumbers[7]);
+                    arrResult[iterator] += englishNumbers[7];
                     break;
                 case 8:
-                    output.Add(englishNumbers[8]);               
+                    arrResult[iterator] += englishNumbers[8];
                     break;
                 case 9:
-                    output.Add(englishNumbers[9]);
+                    arrResult[iterator] += englishNumbers[9];
                     break;
-                }                                         
+                }
+                iterator++;
             }
 
-            for (int i = 0; i < output.Count; i++)
+            for (int i = 0; i < countDigits; i++)
             {
-                temp = i + 1;
-                finalResult += output[output.Count - temp] + " ";
+                finalResult += arrResult[(countDigits - 1) - i] + " ";
             }
+
             MessageBox.Show(finalResult);
             this.Close();
         }
