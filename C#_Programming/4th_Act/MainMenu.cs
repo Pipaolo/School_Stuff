@@ -39,7 +39,11 @@ namespace _4th_Act
 
         //Iterator
         int counter = 0;
-        //
+        //End
+
+        //String Comparator
+        string tempString = "";
+        //End
 
         string currentSelected = "";
         int totalBill = 0;
@@ -51,11 +55,23 @@ namespace _4th_Act
 
         private void generateMenu(string item, int price)
         {
-            while (item.Length < 50)
+            if (counter != 0)
             {
-                item += " ";
+                while (item.Length < tempString.Length)
+                {
+                    item += "-";
+                }
             }
-            item += $" P{price}";
+            else
+            {
+                while (item.Length != 70)
+                {
+                    item += "-";
+                }
+                tempString = item;
+            }
+          
+            item += $"P{price}";
             listBoxMenu.Items.Add(item);
             counter++;
         }
@@ -69,45 +85,45 @@ namespace _4th_Act
             {
                 case "Meals":
                     currentSelected = "Meals";
-                    foreach (string index in Meals)
+                    for (int i = 0; i < Meals.Length; i++)
                     {
-                        generateMenu(index, mealPrices[counter]);
+                        generateMenu(Meals[i], mealPrices[i]);
                     }
                     break;
                 case "Burgers":
                     currentSelected = "Burgers";
-                    foreach (string index in Burgers)
+                    for (int i = 0; i < Burgers.Length; i++)
                     {
-                        generateMenu(index, burgerPrices[counter]);
+                        generateMenu(Burgers[i], burgerPrices[i]);
                     }
                     break;
                 case "Specials":
                     currentSelected = "Specials";
-                    foreach (string index in Specials)
+                    for (int i = 0; i < Specials.Length; i++)
                     {
-                        generateMenu(index, specialPrices[counter]);
+                        generateMenu(Specials[i], specialPrices[i]);
                     }
                     break;
                 case "Fries":
                     currentSelected = "Fries";
-                    foreach (string index in Fries)
+                    for (int i = 0; i < Fries.Length; i++)
                     {
-                        generateMenu(index, friesPrices[counter]);
+                        generateMenu(Fries[i], friesPrices[i]);
                     }
                     break;
                 case "Desserts":
                     currentSelected = "Desserts";
-                    foreach (string index in Desserts)
+                    for (int i = 0; i < Desserts.Length; i++)
                     {
-                        generateMenu(index, dessertPrices[counter]);
+                        generateMenu(Desserts[i], dessertPrices[i]);
                     }
                     break;
                 case "Drinks":
                     chkDrinkSize.Enabled = true;
                     currentSelected = "Drinks";
-                    foreach (string index in Drinks)
+                    for (int i = 0; i < Drinks.Length; i++)
                     {
-                        generateMenu(index, drinksPrices[counter]);
+                        generateMenu(Drinks[i], drinksPrices[i]);
                     }
                     break;
             }
@@ -123,38 +139,73 @@ namespace _4th_Act
             {
                 case "Meals":
                     quantityInput = Interaction.InputBox($"How many? {Meals[listBoxMenu.SelectedIndex]}", "Quantity", "1");
-                    addItemPrice = mealPrices[listBoxMenu.SelectedIndex];
-                    addCart += Meals[listBoxMenu.SelectedIndex] + " x" + quantityInput + " P" + addItemPrice * Convert.ToInt32(quantityInput);
-                    totalBill += addItemPrice;
-                    listBoxCart.Items.Add(addCart);
+                    if (quantityInput.Count() != 0)
+                    {
+                        addItemPrice = mealPrices[listBoxMenu.SelectedIndex];
+                        addCart += Meals[listBoxMenu.SelectedIndex] + " x" + quantityInput + " P" + addItemPrice * Convert.ToInt32(quantityInput);
+                        totalBill += addItemPrice;
+                        listBoxCart.Items.Add(addCart);
+                    }
+                    else
+                    {
+
+                    }
                     break;
                 case "Burgers":
                     quantityInput = Interaction.InputBox($"How many? {Burgers[listBoxMenu.SelectedIndex]}", "Quantity", "1");
-                    addItemPrice = burgerPrices[listBoxMenu.SelectedIndex];
-                    addCart += Burgers[listBoxMenu.SelectedIndex] + " x" + quantityInput + " P" + addItemPrice * Convert.ToInt32(quantityInput);
-                    totalBill += addItemPrice;
-                    listBoxCart.Items.Add(addCart);
+                    if (quantityInput.Count() != 0)
+                    {
+                        addItemPrice = burgerPrices[listBoxMenu.SelectedIndex];
+                        addCart += Burgers[listBoxMenu.SelectedIndex] + " x" + quantityInput + " P" + addItemPrice * Convert.ToInt32(quantityInput);
+                        totalBill += addItemPrice;
+                        listBoxCart.Items.Add(addCart);
+                    }
+                    else
+                    {
+
+                    }
                     break;
                 case "Specials":
                     quantityInput = Interaction.InputBox($"How many? {Specials[listBoxMenu.SelectedIndex]}", "Quantity", "1");
-                    addItemPrice = specialPrices[listBoxMenu.SelectedIndex];
-                    addCart += Specials[listBoxMenu.SelectedIndex] + " x" + quantityInput + " P" + addItemPrice * Convert.ToInt32(quantityInput);
-                    totalBill += addItemPrice;
-                    listBoxCart.Items.Add(addCart);
+                    if (quantityInput.Count() != 0)
+                    {
+                        addItemPrice = specialPrices[listBoxMenu.SelectedIndex];
+                        addCart += Specials[listBoxMenu.SelectedIndex] + " x" + quantityInput + " P" + addItemPrice * Convert.ToInt32(quantityInput);
+                        totalBill += addItemPrice;
+                        listBoxCart.Items.Add(addCart);
+                    }
+                    else
+                    {
+
+                    }
                     break;
                 case "Fries":
                     quantityInput = Interaction.InputBox($"How many? {Fries[listBoxMenu.SelectedIndex]}", "Quantity", "1");
-                    addItemPrice = friesPrices[listBoxMenu.SelectedIndex];
-                    addCart += Fries[listBoxMenu.SelectedIndex] + " x" + quantityInput + " P" + addItemPrice * Convert.ToInt32(quantityInput);
-                    totalBill += addItemPrice;
-                    listBoxCart.Items.Add(addCart);
+                    if(quantityInput.Count() != 0)
+                    {
+                        addItemPrice = friesPrices[listBoxMenu.SelectedIndex];
+                        addCart += Fries[listBoxMenu.SelectedIndex] + " x" + quantityInput + " P" + addItemPrice * Convert.ToInt32(quantityInput);
+                        totalBill += addItemPrice;
+                        listBoxCart.Items.Add(addCart);
+                    }
+                    else
+                    {
+
+                    }
                     break;
                 case "Desserts":
                     quantityInput = Interaction.InputBox($"How many? {Desserts[listBoxMenu.SelectedIndex]}", "Quantity", "1");
-                    addItemPrice = dessertPrices[listBoxMenu.SelectedIndex];
-                    addCart += Desserts[listBoxMenu.SelectedIndex] + " x" + quantityInput + " P" + addItemPrice * Convert.ToInt32(quantityInput);
-                    totalBill += addItemPrice;
-                    listBoxCart.Items.Add(addCart);
+                    if (quantityInput.Count() != 0)
+                    {
+                        addItemPrice = dessertPrices[listBoxMenu.SelectedIndex];
+                        addCart += Desserts[listBoxMenu.SelectedIndex] + " x" + quantityInput + " P" + addItemPrice * Convert.ToInt32(quantityInput);
+                        totalBill += addItemPrice;
+                        listBoxCart.Items.Add(addCart);                   
+                    }
+                    else
+                    {
+
+                    }
                     break;
                 case "Drinks":
                     try
@@ -182,9 +233,16 @@ namespace _4th_Act
                             }
                          
                             quantityInput = Interaction.InputBox($"How many? {Drinks[listBoxMenu.SelectedIndex]}", "Quantity", "1");
-                            addCart += Drinks[listBoxMenu.SelectedIndex] + " x" + quantityInput + " P" + addItemPrice * Convert.ToInt32(quantityInput);
-                            totalBill += addItemPrice;
-                            listBoxCart.Items.Add(addCart);
+                            if (quantityInput.Count() != 0)
+                            {
+                                addCart += Drinks[listBoxMenu.SelectedIndex] + " x" + quantityInput + " P" + addItemPrice * Convert.ToInt32(quantityInput);
+                                totalBill += addItemPrice;
+                                listBoxCart.Items.Add(addCart);
+                            }
+                            else
+                            {
+
+                            }
                         }
                     }
                     catch(System.NullReferenceException)
@@ -201,17 +259,35 @@ namespace _4th_Act
             comboBoxMenu.SelectedItem = comboBoxMenu.Items[0];
         }
 
+        private void chkDrinkSize_Checked(object sender, ItemCheckEventArgs e)
+        {
+            for (int i = 0; i < chkDrinkSize.Items.Count; ++i)
+            {
+                if(i != e.Index)
+                {
+                    chkDrinkSize.SetItemChecked(i, false);
+                }
+            }
+        }
+
         private void btnCheckout_Click(object sender, EventArgs e)
         {
-            CheckOutMenu checkOut = new CheckOutMenu();
-            foreach(string index in listBoxCart.Items)
+            if(listBoxCart.Items.Count == 0)
             {
-                checkOut.listBoxCheckOut.Items.Add(index);
+                MessageBox.Show("Cart Empty!");
             }
-            checkOut.totalBill = totalBill;
-            this.Hide();
-            checkOut.ShowDialog();
-            this.Close();
+            else
+            {
+                CheckOutMenu checkOut = new CheckOutMenu();
+                foreach(string index in listBoxCart.Items)
+                {
+                    checkOut.listBoxCheckOut.Items.Add(index);
+                }
+                checkOut.totalBill = totalBill;
+                this.Hide();
+                checkOut.ShowDialog();
+                this.Close();
+            }
         }
     }
 }
