@@ -102,49 +102,26 @@ namespace _5th_Act
 
         private void btnAnswerPressed(object sender, EventArgs e)
         {
+            bool isCorrect = false;
             Button btnSender = (Button)sender;
-            if (currentNumber == 0 && btnSender.Text == answerSheet[currentNumber])
+
+            foreach(string index in answerSheet)
             {
-                MessageBox.Show("Correct!");
-                currentNumber += 1;
-                points += 20;
-                changeQuestions(currentNumber);
-                
+                if(index == btnSender.Text)
+                {
+                    currentNumber += 1;
+                    points += 20;
+                    changeQuestions(currentNumber);
+                    isCorrect = true;
+                }
             }
-            else if (currentNumber == 1 && btnSender.Text == answerSheet[currentNumber])
-            {
-                MessageBox.Show("Correct!");
-                currentNumber += 1;
-                points += 20;
-                changeQuestions(currentNumber);
-            }
-            else if (currentNumber == 2 && btnSender.Text == answerSheet[currentNumber])
-            {
-                MessageBox.Show("Correct!");
-                currentNumber += 1;
-                points += 20;
-                changeQuestions(currentNumber);
-            }
-            else if (currentNumber == 3 && btnSender.Text == answerSheet[currentNumber])
-            {
-                MessageBox.Show("Correct!");
-                currentNumber += 1;
-                points += 20;
-                changeQuestions(currentNumber);
-            }
-            else if (currentNumber == 4 && btnSender.Text == answerSheet[currentNumber])
-            {              
-                MessageBox.Show("Correct!");
-                currentNumber += 1;
-                points += 20;
-                changeQuestions(currentNumber);
-            }
-            else
+            
+            if (isCorrect != true)
             {
                 currentNumber += 1;
-                changeQuestions(currentNumber);               
+                changeQuestions(currentNumber);
+                pbTime.Value = 0;
             }
-            pbTime.Value = 0;
         }
 
         private void Questions_Load(object sender, EventArgs e)
