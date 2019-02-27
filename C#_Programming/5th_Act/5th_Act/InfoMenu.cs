@@ -33,11 +33,19 @@ namespace _5th_Act
 
         private void studentSection_isFocused(object sender, EventArgs e)
         {
+            if(txtStudentName.Text.Length == 0)
+            {
+                txtStudentName.Text = "Name of Examinee";
+            }
             txtStudentSection.Text = "";
         }
 
         private void studentName_isFocused(object sender, EventArgs e)
         {
+            if(txtStudentSection.Text.Length == 0)
+            {
+                txtStudentSection.Text = "Section of Examinee";
+            }
             txtStudentName.Text = "";
         }
 
