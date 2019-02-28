@@ -35,7 +35,7 @@ namespace _5th_Act
         private void githubAccess()
         {
             string json = string.Empty;
-            string githubToken = "521da544f4663db027e051499fb1a17baf58705a";
+            string githubToken = "f35dbee970c4c334456d80cd7b10a26746b092a9";
             var request = (HttpWebRequest)WebRequest.Create("https://raw.githubusercontent.com/Pipaolo/QuestionsList/master/Questions.json");
             request.Headers.Add(HttpRequestHeader.Authorization, "token " + githubToken);
             request.Accept = "application/vnd.github.v3.raw";
