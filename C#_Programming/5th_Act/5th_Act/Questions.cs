@@ -35,7 +35,7 @@ namespace _5th_Act
         private void githubAccess()
         {
             string json = string.Empty;
-            string githubToken = "f35dbee970c4c334456d80cd7b10a26746b092a9";
+            string githubToken = "14f3b838055fc41748a814b66e6fd07c01b39635";
             var request = (HttpWebRequest)WebRequest.Create("https://raw.githubusercontent.com/Pipaolo/QuestionsList/master/Questions.json");
             request.Headers.Add(HttpRequestHeader.Authorization, "token " + githubToken);
             request.Accept = "application/vnd.github.v3.raw";
@@ -98,11 +98,11 @@ namespace _5th_Act
 
         private void changeQuestions(int currentQuestion)
         {
-            int i = 0;
             try
             {
+                int i = 0;
                 rtxtQuestion.Text = jQuestions.QuestionsList[currentQuestion];
-                this.Text = "Question " + (currentNumber + 1).ToString();
+                this.Text = "Question " + (currentQuestion + 1).ToString();
 
                 if (currentNumber != 0)
                 {
@@ -121,7 +121,13 @@ namespace _5th_Act
             }
             catch (Exception ex)
             {
-                tsProgress.Value += incrementValue;
+                if (tsProgress.Value != 100)
+                {
+                    while(tsProgress.Value < 100)
+                    {
+                        tsProgress.Value += 1;
+                    }
+                }
                 this.timer1.Stop();
                 MessageBox.Show($"Congratulations {nameInput} of {sectionInput}.\n You scored {points} out of {maxPoints}.\n Date answered: {dateInput}.");
                 this.Close();
@@ -142,6 +148,7 @@ namespace _5th_Act
                     pbTime.Value = 0;
                     changeQuestions(currentNumber);
                     isCorrect = true;
+                    break;
                 }
             }
             
