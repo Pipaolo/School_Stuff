@@ -7,54 +7,82 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Web;
+using System.Net;
+using System.IO;
 using MaterialSkin;
 using MaterialSkin.Controls;
+using Newtonsoft.Json;
 
 namespace _5th_Act
 {
     public partial class Questions : MaterialForm
-
     {
+        Items jQuestions;
+
         int points = 0;
+        int maxPoints = 0;
         int currentNumber = 0;
+
+        int incrementValue = 0;
+
         string nameInput = "";
         string sectionInput = "";
         string dateInput = "";
 
-        //Questions
+        #region loadJson
 
-        string[] answerSheet = new string[5] {"Lord Voldemort", "Boston, MA", "Rosh Hashanah",
-                                              "Kaley Cuoco", "Subway"};
+        private void githubAccess()
+        {
+            string json = string.Empty;
+            string githubToken = "521da544f4663db027e051499fb1a17baf58705a";
+            var request = (HttpWebRequest)WebRequest.Create("https://raw.githubusercontent.com/Pipaolo/QuestionsList/master/Questions.json");
+            request.Headers.Add(HttpRequestHeader.Authorization, "token " + githubToken);
+            request.Accept = "application/vnd.github.v3.raw";
+            request.UserAgent = "Quiz App";
+            using (var response = request.GetResponse())
+            {
+                using (StreamReader file = new StreamReader(response.GetResponseStream()))
+                {
+                    json = file.ReadToEnd();
+                }
+            }
+            loadJson(json);
+        }
 
-        string[] questionsList = new string[5] {
-                                                "Which of these antagonist characters was created by novelist J.K. Rowling?",
-                                                "Which of these cities is closest to London, UK?",
-                                                "What is the name for the Jewish New Year?",
-                                                "Which actress plays a major role on the TV show 'The Big Bang Theory'?",
-                                                "What restaurant franchise advises you to 'Eat Fresh'?"
-                                                };
+        private void loadJson(string json)
+        {
+            try
+            {
+                jQuestions = JsonConvert.DeserializeObject<Items>(json);
+            }
+            catch(Exception ex)
+            {
+                System.Diagnostics.Debug.Write(ex.Message.ToString());
+            }
+        }
+        #endregion
 
-        string[,] choiceList = new string[5, 4] { 
-                                                {"Lord Voldemort","Professor Moriarty",
-                                                 "Darth Vader", "Lord Farqaad"}, 
-                                                {"Miami, FL", "Atlanta, GA",
-                                                 "Boston, MA", "New York, NY"},
-                                                {"Yom Kippur", "Kwanzaa",
-                                                 "Hanukkah", "Rosh Hashanah"}, 
-                                                {"Portia de Rossi", "Emily Deschanel",
-                                                 "Kaley Cuoco", "Sofia Vergara"},
-                                                {"McDonald's", "Subway",
-                                                 "KFC", "Taco Bell"}
-                                                };
-        //End of Questions
 
         public Questions(string name, string section, string date)
         {
             InitializeComponent();
+            //Get Json Data from Github
+            githubAccess();
+            //End
+            //Get Credentials
             nameInput = name;
             sectionInput = section;
             dateInput = date;
+            //End
             this.timer1.Enabled = true;
+            //Get MaxPoints
+            maxPoints = jQuestions.QuestionsList.Count() * 20;
+            //
+            //Get Increment Value
+            incrementValue = 100 / jQuestions.QuestionsList.Count();
+            //
+
             // Create a material theme manager and add the form to manage (this)
             MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
@@ -73,29 +101,29 @@ namespace _5th_Act
             int i = 0;
             try
             {
-                rtxtQuestion.Text = questionsList[currentQuestion];
+                rtxtQuestion.Text = jQuestions.QuestionsList[currentQuestion];
                 this.Text = "Question " + (currentNumber + 1).ToString();
 
                 if (currentNumber != 0)
                 {
-                    tsProgress.Increment(20);
+                    tsProgress.Increment(incrementValue);
                 }
 
                 foreach (Control buttons in this.Controls)
                 {
                     if (buttons is Button)
                     {
-                        buttons.Text = choiceList[currentQuestion, i];
+                        buttons.Text = jQuestions.ChoicesList[currentQuestion].choices[i];
                         i++;
                     }
                 }
                 msPoints.Text = "Points: " + points.ToString();
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                tsProgress.Value += 20;
+                tsProgress.Value += incrementValue;
                 this.timer1.Stop();
-                MessageBox.Show($"Congratulations {nameInput} of {sectionInput}.\n You scored {points} out of 100.\n Date answered: {dateInput}.");
+                MessageBox.Show($"Congratulations {nameInput} of {sectionInput}.\n You scored {points} out of {maxPoints}.\n Date answered: {dateInput}.");
                 this.Close();
             }
         }
@@ -105,12 +133,13 @@ namespace _5th_Act
             bool isCorrect = false;
             Button btnSender = (Button)sender;
 
-            foreach(string index in answerSheet)
+            foreach(string index in jQuestions.Answersheet)
             {
                 if(index == btnSender.Text)
                 {
                     currentNumber += 1;
                     points += 20;
+                    pbTime.Value = 0;
                     changeQuestions(currentNumber);
                     isCorrect = true;
                 }
