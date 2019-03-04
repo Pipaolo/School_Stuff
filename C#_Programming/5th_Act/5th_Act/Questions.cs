@@ -26,6 +26,7 @@ namespace _5th_Act
 
         int incrementValue = 0;
 
+        string jsonLink = "https://api.myjson.com/bins/1hav26";
         string nameInput = "";
         string sectionInput = "";
         string dateInput = "";
@@ -40,8 +41,8 @@ namespace _5th_Act
             {
                 using (WebClient wc = new WebClient())
                 {
-                    json = wc.DownloadString("https://api.myjson.com/bins/aap9i");
-                    wc.DownloadFile("https://api.myjson.com/bins/aap9i", fileName);
+                    json = wc.DownloadString(jsonLink);
+                    wc.DownloadFile(jsonLink, fileName);
                 }
             }
             catch(Exception ex)
