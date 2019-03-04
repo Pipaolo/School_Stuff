@@ -54,24 +54,6 @@ namespace _5th_Act
             loadJson(json);
         }
 
-        private void getJson_Github()
-        {
-            string json = string.Empty;
-            string githubToken = "14f3b838055fc41748a814b66e6fd07c01b39635";
-            var request = (HttpWebRequest)WebRequest.Create("https://raw.githubusercontent.com/Pipaolo/QuestionsList/master/Questions.json");
-            request.Headers.Add(HttpRequestHeader.Authorization, "token " + githubToken);
-            request.Accept = "application/vnd.github.v3.raw";
-            request.UserAgent = "Quiz App";
-            using (var response = request.GetResponse())
-            {
-                using (StreamReader file = new StreamReader(response.GetResponseStream()))
-                {
-                    json = file.ReadToEnd();
-                }
-            }
-            loadJson(json);
-        }
-
         private void loadJson(string json)
         {
             try
