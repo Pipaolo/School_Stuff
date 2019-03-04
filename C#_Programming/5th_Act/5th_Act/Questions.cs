@@ -32,7 +32,29 @@ namespace _5th_Act
 
         #region loadJson
 
-        private void githubAccess()
+        private void getJson()
+        {
+            string fileName = "questions.json";
+            string json = string.Empty;
+            try
+            {
+                using (WebClient wc = new WebClient())
+                {
+                    json = wc.DownloadString("https://api.myjson.com/bins/aap9i");
+                    wc.DownloadFile("https://api.myjson.com/bins/aap9i", fileName);
+                }
+            }
+            catch(Exception ex)
+            {
+                using (StreamReader r = new StreamReader(fileName))
+                {
+                    json = r.ReadToEnd();
+                }
+            }
+            loadJson(json);
+        }
+
+        private void getJson_Github()
         {
             string json = string.Empty;
             string githubToken = "f35dbee970c4c334456d80cd7b10a26746b092a9";
@@ -68,7 +90,7 @@ namespace _5th_Act
         {
             InitializeComponent();
             //Get Json Data from Github
-            githubAccess();
+            getJson();
             //End
             //Get Credentials
             nameInput = name;
@@ -142,6 +164,7 @@ namespace _5th_Act
                     pbTime.Value = 0;
                     changeQuestions(currentNumber);
                     isCorrect = true;
+                    break;
                 }
             }
             
