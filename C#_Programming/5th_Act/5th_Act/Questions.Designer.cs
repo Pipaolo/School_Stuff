@@ -145,6 +145,8 @@
             // 
             this.pbTime.Depth = 0;
             this.pbTime.Location = new System.Drawing.Point(0, 63);
+            this.pbTime.MarqueeAnimationSpeed = 1000;
+            this.pbTime.Maximum = 60000;
             this.pbTime.MouseState = MaterialSkin.MouseState.HOVER;
             this.pbTime.Name = "pbTime";
             this.pbTime.Size = new System.Drawing.Size(658, 5);

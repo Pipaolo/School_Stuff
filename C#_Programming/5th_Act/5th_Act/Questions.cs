@@ -168,14 +168,15 @@ namespace _5th_Act
         private void Questions_Load(object sender, EventArgs e)
         {
             changeQuestions(currentNumber);
+            this.pbTime.Maximum = 30000;
             this.timer1.Start();
             msPoints.Text = "Points: " + points.ToString();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            this.pbTime.Increment(1);
-            if(pbTime.Value == 100)
+            this.pbTime.Increment(100);
+            if(pbTime.Value == 30000)
             {
                 pbTime.Value = 0;
                 currentNumber += 1;
