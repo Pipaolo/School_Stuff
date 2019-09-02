@@ -2,8 +2,7 @@ import java.util.Scanner;
 
 public class Main {
     private static Scanner input = new Scanner(System.in);
-
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         int userChoice;
 
         println("Choose a number: ");
@@ -53,31 +52,43 @@ public class Main {
 
         println("Enter Matrices: ");
 
-        for (int i = 0; i < magicSize; i++) {
-            magicInput = input.nextLine().split(" ");
-            for (int j = 0; j < magicSize; j++) {
-                magicSquare[i][j] = Integer.parseInt(magicInput[j]);
+        try{
+            for (int i = 0; i < magicSize; i++) {
+                magicInput = input.nextLine().split(" ");
+                for (int j = 0; j < magicSize; j++) {
+                    magicSquare[i][j] = Integer.parseInt(magicInput[j]);
+                }
             }
+        } catch (Exception ex){
+            println("Invalid Input!");
+            println("Please Try Again!");
+            checkMagicSquare();
         }
 
         //Commence Checker
 
         //Check for Duplicates
         for (int i = 0; i < magicSize; i++) {
-            if(i + 1 == magicSize){
-                break;
-            }
-            int[] temp = magicSquare[i + 1];
+            int[] temp = new int[magicSize];
             for (int j = 0; j < magicSize; j++) {
+                if(i < magicSize - 1){
+                    temp[j] = magicSquare[i + 1][j];
+                }
+
                 if(temp[j] == magicSquare[i][j]){
-                    isFoundDuplicate = !isFoundDuplicate;
+                    print(String.format("Row: %d, TempJ: %d", i, j));
+                    isFoundDuplicate = true;
                     break;
                 }
             }
 
+            if(isFoundDuplicate){
+                break;
+            }
+
         }
 
-        if (isFoundDuplicate){
+        if (!isFoundDuplicate){
             //Check Rows
             for (int i = 0; i < magicSize * magicSize; i++) {
                 if (row == magicSize) {
@@ -139,11 +150,10 @@ public class Main {
         }
 
         if (magicSum[0] == magicNumber && magicSum[1] == magicNumber && magicSum[2] == magicNumber && magicSum[3] == magicNumber) {
-            println("You have entered a Magic Square!");
+            println(String.format("You have entered a valid Magic Square with a sum of: %d", magicNumber));
         } else {
             println("You have entered an Invalid Magic Square!");
         }
-
     }
 
     public static void magicSquareGenerator() {
