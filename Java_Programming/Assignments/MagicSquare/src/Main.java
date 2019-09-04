@@ -45,7 +45,7 @@ public class Main {
         magicSquare = new int[magicSize + 1][magicSize + 1];
         magicSum = new int[4];
 
-        println("Enter n rows, with n numbers per line.");
+        println(String.format("Enter %d rows, with %d numbers per line.", magicSize, magicSize));
 
         try{
             for (int i = 0; i < magicSize; i++) {
