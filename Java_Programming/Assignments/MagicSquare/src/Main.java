@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+//Paolo Tolentino
+//16:30
 public class Main {
     private static Scanner input = new Scanner(System.in);
     public static void main(String[] args) {
@@ -26,15 +28,8 @@ public class Main {
     public static void checkMagicSquare() {
         int magicSize;
         int magicNumber;
-        int row = 0;
-        int col = 0;
 
-        int rowSum = 0;
-        int colSum = 0;
-        int diagSum = 0;
-        int reverseDiagSum = 0;
-
-        boolean isFoundDuplicate = false;
+        boolean isMagicSquare = true;
 
         String[] magicInput;
         int[] magicSum;
@@ -47,10 +42,10 @@ public class Main {
         input.nextLine();
         magicNumber = magicSize * (((magicSize * magicSize) + 1) / 2);
         magicInput = new String[magicSize];
-        magicSquare = new int[magicSize][magicSize];
+        magicSquare = new int[magicSize + 1][magicSize + 1];
         magicSum = new int[4];
 
-        println("Enter Matrices: ");
+        println("Enter 3 rows, with 3 numbers per line.");
 
         try{
             for (int i = 0; i < magicSize; i++) {
@@ -67,93 +62,44 @@ public class Main {
 
         //Commence Checker
 
-        //Check for Duplicates
-        for (int i = 0; i < magicSize; i++) {
-            int[] temp = new int[magicSize];
-            for (int j = 0; j < magicSize; j++) {
-                if(i < magicSize - 1){
-                    temp[j] = magicSquare[i + 1][j];
-                }
+        //Get Row Sums
 
-                if(temp[j] == magicSquare[i][j]){
-                    print(String.format("Row: %d, TempJ: %d", i, j));
-                    isFoundDuplicate = true;
-                    break;
-                }
+        for (int row = 0; row < magicSize; row++) {
+            for (int col = 0; col < magicSize; col++) {
+                magicSquare[row][magicSize] += magicSquare[row][col];
             }
+        }
 
-            if(isFoundDuplicate){
+        //Get Column Sums
+        for (int row = 0; row < magicSize; row++) {
+            for (int col = 0; col < magicSize; col++) {
+                magicSquare[magicSize][col] += magicSquare[col][row];
+            }
+        }
+
+        //Get Diag Sums
+        for (int row = 0; row < magicSize; row++) {
+            magicSquare[magicSize][magicSize] += magicSquare[row][row];
+        }
+
+        println("Matrix Sum:");
+        println("");
+        printMagicSquare(magicSquare);
+
+        for (int i = 0; i < magicSize + 1; i++) {
+            if(magicSquare[magicSize][i] != magicNumber || magicSquare[i][magicSize] != magicNumber){
+                println("");
+                println("It not a Magic Square! UwU :<");
+                isMagicSquare = false;
                 break;
             }
-
         }
 
-        if (!isFoundDuplicate){
-            //Check Rows
-            for (int i = 0; i < magicSize * magicSize; i++) {
-                if (row == magicSize) {
-                    row = 0;
-                    col++;
-                }
-                rowSum += magicSquare[row][col];
-                if (rowSum == magicNumber) {
-                    magicSum[0] = rowSum;
-                    rowSum = 0;
-
-                }
-                row++;
-            }
-
-            row = 0;
-            col = 0;
-            //Check Columns
-            for (int i = 0; i < magicSize * magicSize; i++) {
-                if (col == magicSize) {
-                    col = 0;
-                    row++;
-                }
-
-                colSum += magicSquare[row][col];
-                if (colSum == magicNumber) {
-                    magicSum[1] = colSum;
-                    colSum = 0;
-                }
-                col++;
-            }
-
-            row = 0;
-            col = 0;
-            //Check Diag
-            for (int i = 0; i < magicSize; i++) {
-
-                diagSum += magicSquare[row][col];
-                if (diagSum == magicNumber) {
-                    magicSum[2] = diagSum;
-                }
-                row++;
-                col++;
-            }
-
-            row = 0;
-            col = magicSize - 1;
-
-            //Check Reverse Diag
-            for (int i = magicSize - 1; i >= 0; i--) {
-
-                reverseDiagSum += magicSquare[row][col];
-                if (reverseDiagSum == magicNumber) {
-                    magicSum[3] = reverseDiagSum;
-                }
-                row++;
-                col--;
-            }
+        if(isMagicSquare){
+            println("");
+            println("It is a Magic Square! :>");
         }
 
-        if (magicSum[0] == magicNumber && magicSum[1] == magicNumber && magicSum[2] == magicNumber && magicSum[3] == magicNumber) {
-            println(String.format("You have entered a valid Magic Square with a sum of: %d", magicNumber));
-        } else {
-            println("You have entered an Invalid Magic Square!");
-        }
     }
 
     public static void magicSquareGenerator() {
@@ -226,11 +172,11 @@ public class Main {
     }
 
     public static void printMagicSquare(int[][] magicSquare) {
-        for (int i = 0; i < magicSquare.length; i++) {
-            println("");
+        for (int[] ints : magicSquare) {
             for (int j = 0; j < magicSquare.length; j++) {
-                print(String.format("%4d", magicSquare[i][j]));
+                print(String.format("%5d", ints[j]));
             }
+            println("");
         }
     }
 
