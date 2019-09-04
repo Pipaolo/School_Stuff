@@ -87,7 +87,8 @@ public class Main {
         printMagicSquare(magicSquare);
 
         for (int i = 0; i < magicSize + 1; i++) {
-            if(magicSquare[magicSize][i] != magicNumber || magicSquare[i][magicSize] != magicNumber){
+            if(magicSquare[magicSize][magicSize] != magicSquare[magicSize][i]
+                    || magicSquare[magicSize][magicSize] != magicSquare[i][magicSize]){
                 println("");
                 println("It not a Magic Square! UwU :<");
                 isMagicSquare = false;
