@@ -1,11 +1,13 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 //Paolo Tolentino
 //16:30
 public class Main {
+    public static final ArrayList<String> colors = new ArrayList<>();
+
     public static Scanner input = new Scanner(System.in);
     public static void main(String[] args) {
-
         int userChoice;
 
         println("Choose a number: ");
@@ -28,9 +30,30 @@ public class Main {
 
 
     static void printMagicSquare(int[][] magicSquare) {
-        for (int[] ints : magicSquare) {
+        String ANSI_RESET = "\u001B[0m";
+        String ANSI_BLACK = "\u001B[30m";
+        String ANSI_WHITE = "\u001B[37m";
+        String ANSI_BLUE_BACKGROUND = "\u001B[44m";
+        String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+
+        for (int i = 0; i < magicSquare.length; i++) {
+
             for (int j = 0; j < magicSquare.length; j++) {
-                print(String.format("%5d", ints[j]));
+                if(j == magicSquare.length - 1){
+                    print( ANSI_BLACK + ANSI_BLUE_BACKGROUND);
+                }
+
+                if(j != magicSquare.length - 1){
+                    print( ANSI_BLACK + ANSI_WHITE_BACKGROUND);
+                }
+
+
+                if(i == magicSquare.length - 1){
+                    print(ANSI_BLACK + ANSI_BLUE_BACKGROUND);
+                }
+
+                print(String.format("%5d",  magicSquare[i][j]));
+                print(ANSI_RESET);
             }
             println("");
         }

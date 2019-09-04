@@ -1,4 +1,5 @@
 public class MagicSquareMaker extends Main {
+
     public static void magicSquareGenerator() {
         int magicSize;
         println("Magic Square Generator");
@@ -11,7 +12,7 @@ public class MagicSquareMaker extends Main {
             } else if (magicSize > 9) {
                 println("Number cannot be greater than 9!");
             }
-        } while (magicSize % 2 == 0 || magicSize > 9);
+        } while (magicSize % 2 == 0);
 
         println(String.format("Here is your Magic Square with a size of %d:", magicSize));
 
