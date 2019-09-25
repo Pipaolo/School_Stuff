@@ -58,7 +58,6 @@ public class MagicSquareMaker extends Main {
 
                 magicSquare[row][col] = i++;
             }
-
             // Up Right Movement
             row--;
             col++;
