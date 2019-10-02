@@ -92,16 +92,14 @@ public class Main {
         players.add("Player 1");
         players.add("Player 2");
 
-
         printBoard(gameBoard);
-        println("");
-        println("");
+
         int count = 0;
         while (isGameRunning) {
-            println(String.format("Number of moves: %d", totalMoves));
+            println(String.format("   Number of moves: %d", totalMoves));
             if (isPlayer1Move) {
                 println(String.format("   <--%s/Red's Turn-->", players.get(playerTurn)));
-                print("    Enter Col(1..7): ");
+                print("   Enter Col(1..7): ");
                 playerMove = input.nextInt();
                 if(playerMove > boardWidth || playerMove < 1){
                     println("Invalid Input!");
@@ -111,7 +109,7 @@ public class Main {
                 println("");
             } else {
                 println(String.format("   <--%s/Blue's Turn-->", players.get(playerTurn + 1)));
-                print("   Enter Col(1..7): ");
+                print("  Enter Col(1..7): ");
                 playerMove = input.nextInt();
                 if(playerMove > boardWidth || playerMove < 1){
                     println("Invalid Input!");
