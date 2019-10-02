@@ -1,15 +1,13 @@
 package com.company;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.*;
 
 public class Main {
     static Scanner input = new Scanner(System.in);
     static int boardWidth = 7;
     static int boardHeight = 6;
-    static int playerMoves = 0;
+    static int totalMoves = 0;
     static boolean isPlayer1Move = true;
     static boolean isPlayer1Win = false;
     static boolean isPlayer2Win = false;
@@ -100,6 +98,7 @@ public class Main {
         println("");
         int count = 0;
         while (isGameRunning) {
+            println(String.format("Number of moves: %d", totalMoves));
             if (isPlayer1Move) {
                 println(String.format("   <--%s/Red's Turn-->", players.get(playerTurn)));
                 print("    Enter Col(1..7): ");
@@ -124,7 +123,7 @@ public class Main {
             printBoard(gameBoard);
             println("");
             println("");
-            playerMoves++;
+            totalMoves++;
             isPlayer1Move = !isPlayer1Move;
         }
         printWinner();
@@ -136,17 +135,17 @@ public class Main {
             println("╔═════════════════════╗");
             println("║      Red Wins!      ║");
             println("╚═════════════════════╝");
-            println(String.format("Game Terminated with %d Moves", playerMoves));
+            println(String.format("Game Terminated with %d Moves", totalMoves));
         } else if (isPlayer2Win) {
             println("╔══════════════════════╗");
             println("║      Blue Wins!      ║");
             println("╚══════════════════════╝");
-            println(String.format("Game Terminated with %d Moves", playerMoves));
+            println(String.format("Game Terminated with %d Moves", totalMoves));
         } else {
             println("╔═════════════════════╗");
             println("║         Draw        ║");
             println("╚═════════════════════╝");
-            println(String.format("Game Terminated with %d Moves", playerMoves));
+            println(String.format("Game Terminated with %d Moves", totalMoves));
         }
     }
 
