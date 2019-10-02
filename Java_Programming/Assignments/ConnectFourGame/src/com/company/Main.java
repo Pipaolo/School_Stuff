@@ -9,6 +9,7 @@ public class Main {
     static Scanner input = new Scanner(System.in);
     static int boardWidth = 7;
     static int boardHeight = 6;
+    static int playerMoves = 0;
     static boolean isPlayer1Move = true;
     static boolean isPlayer1Win = false;
     static boolean isPlayer2Win = false;
@@ -20,12 +21,21 @@ public class Main {
 
     public static void mainMenu() {
         int userInput;
-        println("<--Connect Four-->");
-        println("[1] Start Game");
-        println("[2] Exit");
+        println("   ╔════════════════════╗");
+        println("   ║    CONNECT FOUR    ║");
+        println(" ╔═════════════════════════╗");
+        println(" ║0   0   0   0   0   0   0║");
+        println(" ║0   0   0   0   0   0   0║");
+        println(" ║0   0   0   0   0   0   0║");
+        println(" ║0   0   0   0   0   0   0║");
+        println(" ║0   0   0   0   0   0   0║");
+        println(" ║0   0   0   0   0   0   0║");
+        println(" ╚═════════════════════════╝");
+        println(" [1] Start Game");
+        println(" [2] Exit");
 
         do{
-            print("Enter Input: ");
+            print(" Enter Input: ");
             userInput = input.nextInt();
 
             if (userInput == 1) {
@@ -42,13 +52,24 @@ public class Main {
     public static void gameMenu() {
         int userInput;
         cls();
-        println("<--Select Difficulty-->");
-        println("[1] Single Player (W.I.P)");
-        println("[2] Multi Player");
-        println("[3] Back");
+        println("   ╔════════════════════╗");
+        println("   ║    CONNECT FOUR    ║");
+        println(" ╔═════════════════════════╗");
+        println(" ║0   0   0   0   0   0   0║");
+        println(" ║0   0   0   0   0   0   0║");
+        println(" ║0   0   0   0   0   0   0║");
+        println(" ║0   0   0   0   0   0   0║");
+        println(" ║0   0   0   0   0   0   0║");
+        println(" ║0   0   0   0   0   0   0║");
+        println(" ╚═════════════════════════╝");
+        println(" ║    Select Difficulty    ║");
+        println(" ╚═════════════════════════╝");
+        println(" [1] Single Player (W.I.P)");
+        println(" [2] Multi Player");
+        println(" [3] Back");
 
         do{
-            print("Enter Input: ");
+            print(" Enter Input: ");
             userInput = input.nextInt();
 
             if (userInput == 1) {
@@ -80,56 +101,52 @@ public class Main {
         int count = 0;
         while (isGameRunning) {
             if (isPlayer1Move) {
-                println(String.format("<--%s's Turn-->", players.get(playerTurn)));
-                print("Enter Col(1..7): ");
+                println(String.format("   <--%s/Red's Turn-->", players.get(playerTurn)));
+                print("    Enter Col(1..7): ");
                 playerMove = input.nextInt();
                 if(playerMove > boardWidth || playerMove < 1){
                     println("Invalid Input!");
                     continue;
                 }
-                addToBoard(playerMove, "1", gameBoard);
+                addToBoard(playerMove, "R", gameBoard);
                 println("");
             } else {
-                println(String.format("<--%s's Turn-->", players.get(playerTurn + 1)));
-                print("Enter Col(1..7): ");
+                println(String.format("   <--%s/Blue's Turn-->", players.get(playerTurn + 1)));
+                print("   Enter Col(1..7): ");
                 playerMove = input.nextInt();
                 if(playerMove > boardWidth || playerMove < 1){
                     println("Invalid Input!");
                     continue;
                 }
-                addToBoard(playerMove, "2", gameBoard);
+                addToBoard(playerMove, "B", gameBoard);
                 println("");
             }
             printBoard(gameBoard);
             println("");
             println("");
+            playerMoves++;
             isPlayer1Move = !isPlayer1Move;
         }
-
         printWinner();
-
     }
 
     public static void printWinner() {
-        char verticalLine = '║';
-        char horizontalLine = '═';
-        char rightBracket = '╔';
-        char leftBracket = '╗';
-        char invertRB = '╚';
-        char invertLB = '╝';
         cls();
         if (isPlayer1Win) {
-            println("╔════════════════════╗");
-            println("║    Player 1 Win!   ║");
-            println("╚════════════════════╝");
+            println("╔═════════════════════╗");
+            println("║      Red Wins!      ║");
+            println("╚═════════════════════╝");
+            println(String.format("Game Terminated with %d Moves", playerMoves));
         } else if (isPlayer2Win) {
-            println("╔════════════════════╗");
-            println("║    Player 2 Win!   ║");
-            println("╚════════════════════╝");
+            println("╔══════════════════════╗");
+            println("║      Blue Wins!      ║");
+            println("╚══════════════════════╝");
+            println(String.format("Game Terminated with %d Moves", playerMoves));
         } else {
             println("╔═════════════════════╗");
             println("║         Draw        ║");
             println("╚═════════════════════╝");
+            println(String.format("Game Terminated with %d Moves", playerMoves));
         }
     }
 
@@ -138,7 +155,7 @@ public class Main {
 
 
         for (int i = 0; i < boardHeight; i++) {
-            if (!gameBoard[i][playerMove - 1].contains("#")) {
+            if (!gameBoard[i][playerMove - 1].contains("0")) {
                 count++;
             }
         }
@@ -162,7 +179,7 @@ public class Main {
                 if (gameBoard[i][j].contains(playerId)) {
                     count++;
                     if (count >= 4) {
-                        if (playerId.equals("1")) {
+                        if (playerId.equals("R")) {
                             isPlayer1Win = true;
                         } else {
                             isPlayer2Win = true;
@@ -181,7 +198,7 @@ public class Main {
             if (gameBoard[i][playerMove - 1].contains(playerId)) {
                 count++;
                 if (count >= 4) {
-                    if (playerId.equals("1")) {
+                    if (playerId.equals("R")) {
                         isPlayer1Win = true;
                     } else {
                         isPlayer2Win = true;
@@ -202,7 +219,7 @@ public class Main {
                 if (gameBoard[row][col].contains(playerId)) {
                     count++;
                     if (count >= 4) {
-                        if (playerId.equals("1")) {
+                        if (playerId.equals("R")) {
                             isPlayer1Win = true;
                         } else {
                             isPlayer2Win = true;
@@ -287,7 +304,7 @@ public class Main {
         for (int row = 0; row < 6; row++) {
             for (int col = 0; col < 7; col++) {
                 gameBoard[row][col] = new ArrayList<>();
-                gameBoard[row][col].add("#");
+                gameBoard[row][col].add("0");
             }
         }
         return gameBoard;
@@ -347,6 +364,10 @@ public class Main {
                 print(String.format("%c", horizontalLine));
             }
         }
+
+        println("");
+        println("   ║    CONNECT FOUR    ║");
+        println("   ╚════════════════════╝");
     }
 
 
